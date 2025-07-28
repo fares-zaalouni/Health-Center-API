@@ -1,0 +1,16 @@
+C:\Users\fares\source\repos\SHC\SHC.Core.Interfaces\bin\Debug\net8.0\SHC.Core.Interfaces.deps.json
+C:\Users\fares\source\repos\SHC\SHC.Core.Interfaces\bin\Debug\net8.0\SHC.Core.Interfaces.dll
+C:\Users\fares\source\repos\SHC\SHC.Core.Interfaces\bin\Debug\net8.0\SHC.Core.Interfaces.pdb
+C:\Users\fares\source\repos\SHC\SHC.Core.Interfaces\bin\Debug\net8.0\SHC.Core.Domain.dll
+C:\Users\fares\source\repos\SHC\SHC.Core.Interfaces\bin\Debug\net8.0\SHC.Core.Domain.pdb
+C:\Users\fares\source\repos\SHC\SHC.Core.Interfaces\obj\Debug\net8.0\SHC.Core.Interfaces.csproj.AssemblyReference.cache
+C:\Users\fares\source\repos\SHC\SHC.Core.Interfaces\obj\Debug\net8.0\SHC.Core.Interfaces.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\fares\source\repos\SHC\SHC.Core.Interfaces\obj\Debug\net8.0\SHC.Core.Interfaces.AssemblyInfoInputs.cache
+C:\Users\fares\source\repos\SHC\SHC.Core.Interfaces\obj\Debug\net8.0\SHC.Core.Interfaces.AssemblyInfo.cs
+C:\Users\fares\source\repos\SHC\SHC.Core.Interfaces\obj\Debug\net8.0\SHC.Core.Interfaces.csproj.CoreCompileInputs.cache
+C:\Users\fares\source\repos\SHC\SHC.Core.Interfaces\obj\Debug\net8.0\SHC.Core.Interfaces.sourcelink.json
+C:\Users\fares\source\repos\SHC\SHC.Core.Interfaces\obj\Debug\net8.0\SHC.Core.8A6BFE04.Up2Date
+C:\Users\fares\source\repos\SHC\SHC.Core.Interfaces\obj\Debug\net8.0\SHC.Core.Interfaces.dll
+C:\Users\fares\source\repos\SHC\SHC.Core.Interfaces\obj\Debug\net8.0\refint\SHC.Core.Interfaces.dll
+C:\Users\fares\source\repos\SHC\SHC.Core.Interfaces\obj\Debug\net8.0\SHC.Core.Interfaces.pdb
+C:\Users\fares\source\repos\SHC\SHC.Core.Interfaces\obj\Debug\net8.0\ref\SHC.Core.Interfaces.dll

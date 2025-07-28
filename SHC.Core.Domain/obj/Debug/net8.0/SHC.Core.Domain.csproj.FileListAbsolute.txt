@@ -1,0 +1,12 @@
+C:\Users\fares\source\repos\SHC\SHC.Core.Domain\obj\Debug\net8.0\SHC.Core.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\fares\source\repos\SHC\SHC.Core.Domain\obj\Debug\net8.0\SHC.Core.Domain.AssemblyInfoInputs.cache
+C:\Users\fares\source\repos\SHC\SHC.Core.Domain\obj\Debug\net8.0\SHC.Core.Domain.AssemblyInfo.cs
+C:\Users\fares\source\repos\SHC\SHC.Core.Domain\obj\Debug\net8.0\SHC.Core.Domain.csproj.CoreCompileInputs.cache
+C:\Users\fares\source\repos\SHC\SHC.Core.Domain\obj\Debug\net8.0\SHC.Core.Domain.sourcelink.json
+C:\Users\fares\source\repos\SHC\SHC.Core.Domain\bin\Debug\net8.0\SHC.Core.Domain.deps.json
+C:\Users\fares\source\repos\SHC\SHC.Core.Domain\bin\Debug\net8.0\SHC.Core.Domain.dll
+C:\Users\fares\source\repos\SHC\SHC.Core.Domain\bin\Debug\net8.0\SHC.Core.Domain.pdb
+C:\Users\fares\source\repos\SHC\SHC.Core.Domain\obj\Debug\net8.0\SHC.Core.Domain.dll
+C:\Users\fares\source\repos\SHC\SHC.Core.Domain\obj\Debug\net8.0\refint\SHC.Core.Domain.dll
+C:\Users\fares\source\repos\SHC\SHC.Core.Domain\obj\Debug\net8.0\SHC.Core.Domain.pdb
+C:\Users\fares\source\repos\SHC\SHC.Core.Domain\obj\Debug\net8.0\ref\SHC.Core.Domain.dll

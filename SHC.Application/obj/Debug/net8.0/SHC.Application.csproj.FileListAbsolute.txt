@@ -1,0 +1,12 @@
+C:\Users\fares\source\repos\SHC\SHC.Application\bin\Debug\net8.0\SHC.Application.deps.json
+C:\Users\fares\source\repos\SHC\SHC.Application\bin\Debug\net8.0\SHC.Application.dll
+C:\Users\fares\source\repos\SHC\SHC.Application\bin\Debug\net8.0\SHC.Application.pdb
+C:\Users\fares\source\repos\SHC\SHC.Application\obj\Debug\net8.0\SHC.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\fares\source\repos\SHC\SHC.Application\obj\Debug\net8.0\SHC.Application.AssemblyInfoInputs.cache
+C:\Users\fares\source\repos\SHC\SHC.Application\obj\Debug\net8.0\SHC.Application.AssemblyInfo.cs
+C:\Users\fares\source\repos\SHC\SHC.Application\obj\Debug\net8.0\SHC.Application.csproj.CoreCompileInputs.cache
+C:\Users\fares\source\repos\SHC\SHC.Application\obj\Debug\net8.0\SHC.Application.sourcelink.json
+C:\Users\fares\source\repos\SHC\SHC.Application\obj\Debug\net8.0\SHC.Application.dll
+C:\Users\fares\source\repos\SHC\SHC.Application\obj\Debug\net8.0\refint\SHC.Application.dll
+C:\Users\fares\source\repos\SHC\SHC.Application\obj\Debug\net8.0\SHC.Application.pdb
+C:\Users\fares\source\repos\SHC\SHC.Application\obj\Debug\net8.0\ref\SHC.Application.dll

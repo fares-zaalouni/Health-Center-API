@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SHC.Core.Domain\SHC.Core.Domain.csproj" />
+    <ProjectReference Include="..\SHC.Core.Services\SHC.Core.Services.csproj" />
+    <ProjectReference Include="..\SHC.Infrastructure.Data\SHC.Infrastructure.Data.csproj" />
+  </ItemGroup>
+
+</Project>
