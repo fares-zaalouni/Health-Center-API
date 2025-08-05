@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v8.0": {
       "SHC.Core.Services/1.0.0": {
         "dependencies": {
-          "SHC.Core.Domain": "1.0.0"
+          "SHC.Core.Domain": "1.0.0",
+          "SHC.Core.Interfaces": "1.0.0"
         },
         "runtime": {
           "SHC.Core.Services.dll": {}
@@ -17,6 +18,17 @@
       "SHC.Core.Domain/1.0.0": {
         "runtime": {
           "SHC.Core.Domain.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "SHC.Core.Interfaces/1.0.0": {
+        "dependencies": {
+          "SHC.Core.Domain": "1.0.0"
+        },
+        "runtime": {
+          "SHC.Core.Interfaces.dll": {
             "assemblyVersion": "1.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -31,6 +43,11 @@
       "sha512": ""
     },
     "SHC.Core.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SHC.Core.Interfaces/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

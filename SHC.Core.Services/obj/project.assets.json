@@ -11,6 +11,19 @@
         "runtime": {
           "bin/placeholder/SHC.Core.Domain.dll": {}
         }
+      },
+      "SHC.Core.Interfaces/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "SHC.Core.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/SHC.Core.Interfaces.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SHC.Core.Interfaces.dll": {}
+        }
       }
     }
   },
@@ -19,11 +32,17 @@
       "type": "project",
       "path": "../SHC.Core.Domain/SHC.Core.Domain.csproj",
       "msbuildProject": "../SHC.Core.Domain/SHC.Core.Domain.csproj"
+    },
+    "SHC.Core.Interfaces/1.0.0": {
+      "type": "project",
+      "path": "../SHC.Core.Interfaces/SHC.Core.Interfaces.csproj",
+      "msbuildProject": "../SHC.Core.Interfaces/SHC.Core.Interfaces.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "SHC.Core.Domain >= 1.0.0"
+      "SHC.Core.Domain >= 1.0.0",
+      "SHC.Core.Interfaces >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -61,6 +80,9 @@
           "projectReferences": {
             "C:\\Users\\fares\\source\\repos\\SHC\\SHC.Core.Domain\\SHC.Core.Domain.csproj": {
               "projectPath": "C:\\Users\\fares\\source\\repos\\SHC\\SHC.Core.Domain\\SHC.Core.Domain.csproj"
+            },
+            "C:\\Users\\fares\\source\\repos\\SHC\\SHC.Core.Interfaces\\SHC.Core.Interfaces.csproj": {
+              "projectPath": "C:\\Users\\fares\\source\\repos\\SHC\\SHC.Core.Interfaces\\SHC.Core.Interfaces.csproj"
             }
           }
         }

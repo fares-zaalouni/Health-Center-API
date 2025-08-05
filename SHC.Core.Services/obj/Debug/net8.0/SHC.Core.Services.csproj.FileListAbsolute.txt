@@ -14,3 +14,5 @@ C:\Users\fares\source\repos\SHC\SHC.Core.Services\obj\Debug\net8.0\SHC.Core.Serv
 C:\Users\fares\source\repos\SHC\SHC.Core.Services\obj\Debug\net8.0\refint\SHC.Core.Services.dll
 C:\Users\fares\source\repos\SHC\SHC.Core.Services\obj\Debug\net8.0\SHC.Core.Services.pdb
 C:\Users\fares\source\repos\SHC\SHC.Core.Services\obj\Debug\net8.0\ref\SHC.Core.Services.dll
+C:\Users\fares\source\repos\SHC\SHC.Core.Services\bin\Debug\net8.0\SHC.Core.Interfaces.dll
+C:\Users\fares\source\repos\SHC\SHC.Core.Services\bin\Debug\net8.0\SHC.Core.Interfaces.pdb

@@ -11,17 +11,17 @@ namespace SHC.Core.Domain.Patient
         public Guid Id { get; private set; }
         public DateTime AppointmentDate { get; private set; }
         public bool IsUrgent { get; private set; }
-        public TimeSpan Duration { get; private set; }
+        public int DurationInMin { get; private set; }
         public Guid AssignedDoctorId { get; private set; }
         public Guid PatientId;
-        public Appointment(Guid id, DateTime appointmentDate, Guid assignedDoctorId, TimeSpan duration = default, bool isUrgent = false)
+        public Appointment(Guid id, DateTime appointmentDate, Guid assignedDoctorId, int durationInMin = 30, bool isUrgent = false)
         {
             Id = id != Guid.Empty ? id : throw new ArgumentException("Id cannot be empty.", nameof(id));
             AppointmentDate = appointmentDate != default ? appointmentDate : throw new ArgumentException("Appointment date is required.", nameof(appointmentDate));
             if (appointmentDate < DateTime.Now) throw new ArgumentException("Appointment date cannot be in the past.", nameof(appointmentDate));
             AssignedDoctorId = assignedDoctorId != Guid.Empty ? assignedDoctorId : throw new ArgumentException("Assigned doctor ID cannot be empty.", nameof(assignedDoctorId));
             IsUrgent = isUrgent;
-            Duration = duration != default ? duration : TimeSpan.FromMinutes(30) ;
+            DurationInMin = durationInMin ;
         }
         public void UpdateAppointmentDate(DateTime newDate)
         {
@@ -40,9 +40,9 @@ namespace SHC.Core.Domain.Patient
             AssignedDoctorId = newDoctorId != Guid.Empty ? newDoctorId : throw new ArgumentException("New doctor ID cannot be empty.", nameof(newDoctorId));
         }
 
-        public void SetDuration(TimeSpan duration)
+        public void SetDuration(int duration)
         {
-            Duration = duration != TimeSpan.Zero ? duration : throw new ArgumentException("Duration cannot be zero", nameof(duration));
+            DurationInMin = duration > 0 ? duration : throw new ArgumentException("Duration cannot be zero or negative", nameof(duration));
         }
     }
 }

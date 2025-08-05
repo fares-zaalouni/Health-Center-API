@@ -9,10 +9,9 @@ namespace SHC.Core.Domain.Patient
     public class Patient
     {
         public Guid Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public Guid UserId { get; set; }
         public string? EmergencyContactName { get; set; }
-        public int? EmergencyContactPhone { get; set; }
+        public string? EmergencyContactPhone { get; set; }
         public BloodType? BloodType { get; set; }
         public float? Weight { get; set; }
         public float? Height { get; set; }
@@ -23,21 +22,21 @@ namespace SHC.Core.Domain.Patient
 
         public Patient(
             Guid id,
-            string firstName,
-            string lastName,
+            Guid userId,
             string? emergencyContactName = null,
-            int? emergencyContactPhone = null,
+            string? emergencyContactPhone = null,
             BloodType? bloodType = null,
             float? weight = null,
-            float? height = null)
+            float? height = null
+            )
         {
             Id = id != Guid.Empty ? id : throw new ArgumentException("Id cannot be empty.", nameof(id));
-            FirstName = firstName ?? throw new ArgumentNullException(nameof(firstName), "firstname is required.");
             EmergencyContactName = emergencyContactName;
             EmergencyContactPhone = emergencyContactPhone;
             BloodType = bloodType;
             Weight = weight;
             Height = height;
+            UserId = userId;
         }
     }
 }

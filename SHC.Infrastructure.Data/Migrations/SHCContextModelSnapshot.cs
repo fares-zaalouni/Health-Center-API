@@ -64,8 +64,8 @@ namespace SHC.Infrastructure.Data.Migrations
                     b.Property<Guid>("AssignedDoctorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<TimeSpan>("Duration")
-                        .HasColumnType("time");
+                    b.Property<int>("DurationInMin")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsUrgent")
                         .HasColumnType("bit");
@@ -170,19 +170,14 @@ namespace SHC.Infrastructure.Data.Migrations
                     b.Property<string>("EmergencyContactName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("EmergencyContactPhone")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
+                    b.Property<string>("EmergencyContactPhone")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<float?>("Height")
                         .HasColumnType("real");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<float?>("Weight")
                         .HasColumnType("real");
@@ -190,6 +185,40 @@ namespace SHC.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DBPatient");
+                });
+
+            modelBuilder.Entity("SHC.Core.Domain.User.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Cin")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Dob")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Firstname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lastname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DBUser");
                 });
 
             modelBuilder.Entity("SHC.Core.Domain.Patient.Allergy", b =>

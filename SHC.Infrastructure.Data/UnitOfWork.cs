@@ -13,10 +13,12 @@ namespace SHC.Infrastructure.Data
     {
         private readonly SHCContext _dbContext;
         public IPatientRepository Patients { get; }
+        public IUserRepository Users { get; }
         public UnitOfWork(SHCContext dbContext)
         {
             _dbContext = dbContext;
             Patients = new PatientRepository(_dbContext);
+            Users = new UserRepository(_dbContext);
         }
 
         public void Dispose()

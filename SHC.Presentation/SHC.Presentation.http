@@ -1,0 +1,6 @@
+@SHC.Presentation_HostAddress = http://localhost:5191
+
+GET {{SHC.Presentation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SHC.Core.Domain.Patient;
+using SHC.Core.Domain.User;
 
 
 namespace SHC.Infrastructure.Data
@@ -12,6 +13,8 @@ namespace SHC.Infrastructure.Data
         public DbSet<MedicalCondition> DBMedicalCondition { get; set; }
         public DbSet<MedicationIntake> DBMedicationIntake { get; set; }
         public DbSet<MedicalPlan> DBMedicalPlan { get; set; }
+        public DbSet<User> DBUser { get; set; }
+
         /*private AMContext _context;
         private AMContext()
         {
@@ -59,6 +62,10 @@ namespace SHC.Infrastructure.Data
                 .HasMany<MedicalPlan>("MedicalPlans")
                 .WithOne()
                 .HasForeignKey("PatientId");
+
+            modelBuilder.Entity<Patient>()
+                .Property(p => p.UserId)
+                .IsRequired();
 
         }
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)

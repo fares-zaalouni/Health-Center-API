@@ -27,9 +27,10 @@ namespace SHC.Infrastructure.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Patient?> GetByIdAsync(Guid patientId)
+        public async Task<Patient?> GetByIdAsync(Guid patientId)
         {
-            throw new NotImplementedException();
+            Patient? patient = await _dbContext.DBPatient.FindAsync(patientId);
+            return patient;
         }
     }
 }

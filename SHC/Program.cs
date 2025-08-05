@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using SHC.Core.Domain.Patient;
+using SHC.Core.Domain.User;
 using SHC.Core.Services;
 using SHC.Infrastructure.Data;
 Appointment app = new Appointment(Guid.NewGuid(), DateTime.Now.AddDays(3), Guid.NewGuid());
@@ -10,13 +11,7 @@ appList.Add(app);
 appList.Add(app2);
 
 
-AppointmentDomainService appDS = new AppointmentDomainService();
-Patient p = new Patient(Guid.NewGuid(), "fares", "zaalouni");
-SHCContext context = new SHCContext();
-UnitOfWork unitOfWork = new UnitOfWork(context);
-await unitOfWork.Patients.AddAsync(p);
-await unitOfWork.SaveAsync();
-//appDS.ValidateAppointment(app3, appList);
+
 
 
 

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SHC.Core.Domain\SHC.Core.Domain.csproj" />
+    <ProjectReference Include="..\SHC.Core.Interfaces\SHC.Core.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>

@@ -8,6 +8,8 @@ namespace SHC.Core.Interfaces
 {
     public interface IUnitOfWork: IDisposable
     {
+        IPatientRepository Patients { get; }
+        IUserRepository Users { get; }
         Task SaveAsync(CancellationToken cancellationToken = default);
     }
 }
