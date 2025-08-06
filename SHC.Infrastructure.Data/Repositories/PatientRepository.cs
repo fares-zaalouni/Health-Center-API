@@ -29,8 +29,7 @@ namespace SHC.Infrastructure.Data.Repositories
 
         public async Task<Patient?> GetByIdAsync(Guid patientId)
         {
-            Patient? patient = await _dbContext.DBPatient.FindAsync(patientId);
-            return patient;
+           return await _dbContext.DBPatient.FindAsync(patientId);        
         }
     }
 }

@@ -55,14 +55,10 @@ namespace SHC.Infrastructure.Data.Migrations
             modelBuilder.Entity("SHC.Core.Domain.Patient.Appointment", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("AppointmentDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<Guid>("AssignedDoctorId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("DurationInMin")
                         .HasColumnType("int");
@@ -184,6 +180,9 @@ namespace SHC.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
                     b.ToTable("DBPatient");
                 });
 
@@ -262,6 +261,15 @@ namespace SHC.Infrastructure.Data.Migrations
                     b.HasOne("SHC.Core.Domain.Patient.MedicalPlan", null)
                         .WithMany("MedicationIntakes")
                         .HasForeignKey("MedicalPlanId");
+                });
+
+            modelBuilder.Entity("SHC.Core.Domain.Patient.Patient", b =>
+                {
+                    b.HasOne("SHC.Core.Domain.User.User", null)
+                        .WithOne()
+                        .HasForeignKey("SHC.Core.Domain.Patient.Patient", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SHC.Core.Domain.Patient.MedicalPlan", b =>

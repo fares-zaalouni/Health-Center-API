@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SHC.Core.Domain.Patient;
 using SHC.Core.Domain.User;
 
@@ -30,7 +31,10 @@ namespace SHC.Infrastructure.Data
         {
             optionsBuilder.UseSqlServer(@"Data Source=(localdb)\mssqllocaldb; 
                                                 Initial Catalog = shc; 
-                                                Integrated Security = true");
+                                                Integrated Security = true")
+                .EnableSensitiveDataLogging()
+                 .EnableDetailedErrors()
+                 .LogTo(Console.WriteLine, LogLevel.Information);
             optionsBuilder.UseLazyLoadingProxies();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -44,9 +48,15 @@ namespace SHC.Infrastructure.Data
                 .HasValue<Traveller>(1)
                 .HasValue<Staff>(2);*/
             modelBuilder.Entity<Patient>()
-            .HasMany<Appointment>("Appointments")
-            .WithOne()
-            .HasForeignKey("PatientId");
+               .HasOne<User>() // no navigation on Patient
+               .WithOne()      // no navigation on User
+               .HasForeignKey<Patient>(p => p.UserId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Patient>()
+                .HasMany(p => p.Appointments)
+                .WithOne()
+                .HasForeignKey(a => a.PatientId);
 
             modelBuilder.Entity<Patient>()
                 .HasMany<Allergy>("Allergies")
@@ -67,6 +77,10 @@ namespace SHC.Infrastructure.Data
                 .Property(p => p.UserId)
                 .IsRequired();
 
+
+            modelBuilder.Entity<Appointment>()
+                .Property(a => a.Id)
+                .ValueGeneratedNever();
         }
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
