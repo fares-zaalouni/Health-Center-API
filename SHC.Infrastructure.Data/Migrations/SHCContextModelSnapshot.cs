@@ -28,7 +28,6 @@ namespace SHC.Infrastructure.Data.Migrations
             modelBuilder.Entity("SHC.Core.Domain.Patient.Allergy", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Allergent")
@@ -79,7 +78,6 @@ namespace SHC.Infrastructure.Data.Migrations
             modelBuilder.Entity("SHC.Core.Domain.Patient.MedicalCondition", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -103,7 +101,6 @@ namespace SHC.Infrastructure.Data.Migrations
             modelBuilder.Entity("SHC.Core.Domain.Patient.MedicalPlan", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<float>("DailyDoze")
@@ -135,7 +132,6 @@ namespace SHC.Infrastructure.Data.Migrations
             modelBuilder.Entity("SHC.Core.Domain.Patient.MedicationIntake", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<float>("Doze")
@@ -157,11 +153,16 @@ namespace SHC.Infrastructure.Data.Migrations
             modelBuilder.Entity("SHC.Core.Domain.Patient.Patient", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("BloodType")
                         .HasColumnType("int");
+
+                    b.Property<string>("Cin")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmergencyContactName")
                         .HasColumnType("nvarchar(max)");
@@ -169,8 +170,16 @@ namespace SHC.Infrastructure.Data.Migrations
                     b.Property<string>("EmergencyContactPhone")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Firstname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<float?>("Height")
                         .HasColumnType("real");
+
+                    b.Property<string>("Lastname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -180,8 +189,7 @@ namespace SHC.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("DBPatient");
                 });
@@ -189,25 +197,12 @@ namespace SHC.Infrastructure.Data.Migrations
             modelBuilder.Entity("SHC.Core.Domain.User.User", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Cin")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Dob")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Firstname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lastname")
+                    b.Property<string>("HashedPassword")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -266,8 +261,8 @@ namespace SHC.Infrastructure.Data.Migrations
             modelBuilder.Entity("SHC.Core.Domain.Patient.Patient", b =>
                 {
                     b.HasOne("SHC.Core.Domain.User.User", null)
-                        .WithOne()
-                        .HasForeignKey("SHC.Core.Domain.Patient.Patient", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

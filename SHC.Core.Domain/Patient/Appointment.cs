@@ -12,14 +12,14 @@ namespace SHC.Core.Domain.Patient
         public DateTime AppointmentDate { get; private set; }
         public bool IsUrgent { get; private set; }
         public int DurationInMin { get; private set; }
-        public Guid AssignedDoctorId { get; private set; }
-        public Guid PatientId;
-        public Appointment(Guid id, DateTime appointmentDate, Guid assignedDoctorId, int durationInMin = 30, bool isUrgent = false)
+        //public Guid AssignedDoctorId { get; private set; }
+        public Guid PatientId { get; set; }
+        public Appointment(Guid id, DateTime appointmentDate , int durationInMin = 30, bool isUrgent = false)
         {
             Id = id != Guid.Empty ? id : throw new ArgumentException("Id cannot be empty.", nameof(id));
             AppointmentDate = appointmentDate != default ? appointmentDate : throw new ArgumentException("Appointment date is required.", nameof(appointmentDate));
             if (appointmentDate < DateTime.Now) throw new ArgumentException("Appointment date cannot be in the past.", nameof(appointmentDate));
-            AssignedDoctorId = assignedDoctorId != Guid.Empty ? assignedDoctorId : throw new ArgumentException("Assigned doctor ID cannot be empty.", nameof(assignedDoctorId));
+            //AssignedDoctorId = assignedDoctorId != Guid.Empty ? assignedDoctorId : throw new ArgumentException("Assigned doctor ID cannot be empty.", nameof(assignedDoctorId));
             IsUrgent = isUrgent;
             DurationInMin = durationInMin ;
         }
@@ -37,7 +37,7 @@ namespace SHC.Core.Domain.Patient
 
         public void ReassignDoctor(Guid newDoctorId)
         {
-            AssignedDoctorId = newDoctorId != Guid.Empty ? newDoctorId : throw new ArgumentException("New doctor ID cannot be empty.", nameof(newDoctorId));
+            //AssignedDoctorId = newDoctorId != Guid.Empty ? newDoctorId : throw new ArgumentException("New doctor ID cannot be empty.", nameof(newDoctorId));
         }
 
         public void SetDuration(int duration)

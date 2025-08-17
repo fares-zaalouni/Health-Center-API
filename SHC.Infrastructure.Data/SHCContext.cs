@@ -39,18 +39,38 @@ namespace SHC.Infrastructure.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.ApplyConfiguration(new PlaneConfig());
+            modelBuilder.Entity<Appointment>()
+                .Property(a => a.Id)
+                .ValueGeneratedNever();
 
-
-            /*modelBuilder.Entity<Passenger>()
-                .HasDiscriminator<int>("IsTraveller")
-                .HasValue<Passenger>(0)
-                .HasValue<Traveller>(1)
-                .HasValue<Staff>(2);*/
             modelBuilder.Entity<Patient>()
-               .HasOne<User>() // no navigation on Patient
-               .WithOne()      // no navigation on User
-               .HasForeignKey<Patient>(p => p.UserId)
+                .Property(p => p.Id)
+                .ValueGeneratedNever();
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.Id)
+                .ValueGeneratedNever();
+
+            modelBuilder.Entity<Allergy>()
+                .Property(a => a.Id)
+                .ValueGeneratedNever();
+
+            modelBuilder.Entity<MedicalCondition>()
+                .Property(m => m.Id)
+                .ValueGeneratedNever();
+
+            modelBuilder.Entity<MedicalPlan>()
+                .Property(m => m.Id)
+                .ValueGeneratedNever();
+
+            modelBuilder.Entity<MedicationIntake>()
+                .Property(m => m.Id)
+                .ValueGeneratedNever();
+
+            modelBuilder.Entity<User>()
+               .HasMany<Patient>() 
+               .WithOne()      
+               .HasForeignKey(p => p.UserId)
                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Patient>()
@@ -76,11 +96,6 @@ namespace SHC.Infrastructure.Data
             modelBuilder.Entity<Patient>()
                 .Property(p => p.UserId)
                 .IsRequired();
-
-
-            modelBuilder.Entity<Appointment>()
-                .Property(a => a.Id)
-                .ValueGeneratedNever();
         }
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {

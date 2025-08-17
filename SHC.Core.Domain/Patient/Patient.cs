@@ -8,35 +8,35 @@ namespace SHC.Core.Domain.Patient
 {
     public class Patient
     {
-        public Guid Id { get; set; }
-        public Guid UserId { get; set; }
-        public string? EmergencyContactName { get; set; }
-        public string? EmergencyContactPhone { get; set; }
-        public BloodType? BloodType { get; set; }
-        public float? Weight { get; set; }
-        public float? Height { get; set; }
-        public virtual IList<Appointment> Appointments { get; set; }
-        public virtual IList<Allergy> Allergies { get; set; }
-        public virtual IList<MedicalCondition> MedicalConditions { get; set; }
-        public virtual IList<MedicalPlan> MedicalPlans { get; set; }
+        public Guid Id { get; private set; }
+        public Guid UserId { get; private set; }
+        public string Firstname { get; private set; }
+        public string Lastname { get; private set; }
+        public string? Cin { get; private set; }
+        public string? Email { get; private set; }
+        public string? EmergencyContactName { get; private set; }
+        public string? EmergencyContactPhone { get; private set; }
+        public BloodType? BloodType { get; private set; }
+        public float? Weight { get; private set; }
+        public float? Height { get; private set; }
+        public virtual IList<Appointment> Appointments { get; set; } = new List<Appointment>();
+        public virtual IList<Allergy> Allergies { get; set; } = new List<Allergy>();
+        public virtual IList<MedicalCondition> MedicalConditions { get; set; } = new List<MedicalCondition>();
+        public virtual IList<MedicalPlan> MedicalPlans { get; set; } = new List<MedicalPlan>();
 
-        public Patient(
-            Guid id,
-            Guid userId,
-            string? emergencyContactName = null,
-            string? emergencyContactPhone = null,
-            BloodType? bloodType = null,
-            float? weight = null,
-            float? height = null
-            )
+        public Patient(Guid id, Guid userId, string firstname, string lastname, string? cin, string? email, string? emergencyContactName, string? emergencyContactPhone, BloodType? bloodType, float? weight, float? height)
         {
-            Id = id != Guid.Empty ? id : throw new ArgumentException("Id cannot be empty.", nameof(id));
+            Id = id;
+            UserId = userId;
+            Firstname = firstname;
+            Lastname = lastname;
+            Cin = cin;
+            Email = email;
             EmergencyContactName = emergencyContactName;
             EmergencyContactPhone = emergencyContactPhone;
             BloodType = bloodType;
             Weight = weight;
             Height = height;
-            UserId = userId;
         }
     }
 }

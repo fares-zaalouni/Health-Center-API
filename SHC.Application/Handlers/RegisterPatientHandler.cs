@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using SHC.Application.Commands;
 using SHC.Core.Domain.Patient;
 using SHC.Core.Domain.User;
@@ -29,8 +30,27 @@ namespace SHC.Application.Handlers
                 var errors = string.Join("\n", validationResult.Errors.Select(e => e.ErrorMessage));
                 throw new Exception($"Validation failed:\n{errors}");
             }
-            User user = new User(Guid.NewGuid(), command.Firstname, command.Lastname, command.Cin, command.Dob,command.Email, command.PhoneNumber);
-            Patient patient = new Patient(Guid.NewGuid(), user.Id, command.EmergencyContactName, command.EmergencyContactPhone, command.BloodType, command.Weight, command.Height);
+            User user = new User(
+                Guid.NewGuid(),
+                command.Dob,
+                "",
+                command.PhoneNumber);
+            string hashedPassword = new PasswordHasher<User>()
+                .HashPassword(user, command.Password);
+            user.SetPassword(hashedPassword);
+
+            Patient patient = new Patient(
+                Guid.NewGuid(), 
+                user.Id, 
+                command.Firstname,
+                command.Lastname,
+                command.Cin,
+                command.Email,
+                command.EmergencyContactName,
+                command.EmergencyContactPhone, 
+                command.BloodType, 
+                command.Weight, 
+                command.Height);
             await _unitOfWork.Users.AddAsync(user);
             await _unitOfWork.Patients.AddAsync(patient);
             await _unitOfWork.SaveAsync();

@@ -1,5 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
+using SHC.Application.Exceptions;
+using SHC.Core.Services.Exceptions;
 using System.Net;
 using System.Text.Json;
 
@@ -19,21 +21,38 @@ namespace SHC.Presentation.Middlewares
             {
                 await next(context);
             }
+            catch (PatientNotFoundException ex)
+            {
+                await HandleExceptionAsync(context, HttpStatusCode.BadRequest, "Patient not found", ex);
+                
+            }
+            catch (AppointmentOverlapException ex)
+            {
+                await HandleExceptionAsync(context, HttpStatusCode.BadRequest, "Appointment not found", ex);
+            }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
-                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                ProblemDetails problem = new()
-                {
-                    Status = (int)HttpStatusCode.InternalServerError,
-                    Type = "Server Error",
-                    Title = "Server Error",
-                    Detail = ex.Message
-                };
-                string json = JsonSerializer.Serialize(problem);
-                context.Response.ContentType = "application/json";
-                await context.Response.WriteAsync(json);
+                await HandleExceptionAsync(context, HttpStatusCode.InternalServerError, "Server Error", ex);
             }
+
+        }
+        private async Task HandleExceptionAsync(HttpContext context, HttpStatusCode code, string title, Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            var problem = new ProblemDetails
+            {
+                Status = (int)code,
+                Type = "Server Error",
+                Title = title,
+                Detail = ex.Message
+            };
+
+            context.Response.StatusCode = (int)code;
+            context.Response.ContentType = "application/json";
+
+            var json = JsonSerializer.Serialize(problem);
+            await context.Response.WriteAsync(json);
         }
     }
+
 }

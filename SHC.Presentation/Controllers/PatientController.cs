@@ -36,8 +36,8 @@ namespace SHC.Presentation.Controllers
         public async Task<IActionResult> RegisterAppointment(Guid id, RegisterAppointmentCommand command)
         {
             command.PatientId = id;
-            var result = await _registerAppointmentHandler.Handle(command);
-            return Ok(result);
+            await _registerAppointmentHandler.Handle(command);
+            return Ok();
         }
     }
 }

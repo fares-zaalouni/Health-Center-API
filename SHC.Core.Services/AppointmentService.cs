@@ -1,5 +1,6 @@
 ﻿using SHC.Core.Domain.Patient;
 using SHC.Core.Interfaces.IServices;
+using SHC.Core.Services.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace SHC.Core.Services
     public class AppointmentService : IAppointmentService
     {
         public AppointmentService() { }
-        public void ValidateAppointment(Appointment appointment, List<Appointment> patientAppointments) {
+        public void ValidateAppointment(Appointment appointment, IList<Appointment> patientAppointments) {
             if (appointment == null) throw new ArgumentNullException(nameof(appointment));
 
             if (appointment.DurationInMin <= 0)
@@ -24,11 +25,11 @@ namespace SHC.Core.Services
 
             var newEnd = appointment.AppointmentDate.AddMinutes(appointment.DurationInMin);
 
-            bool hasOverlap = patientAppointments.Any(a =>
+            Appointment? overlapped = patientAppointments.Where(a =>
                 newStart <= a.AppointmentDate.AddMinutes(a.DurationInMin) &&
-                a.AppointmentDate <= newEnd);
+                a.AppointmentDate <= newEnd).FirstOrDefault();
 
-            if (hasOverlap) throw new Exception("Appointment overlaps with an existing appointment.");
+            if (overlapped != null) throw new AppointmentOverlapException(overlapped.PatientId);
         }
     }
 }

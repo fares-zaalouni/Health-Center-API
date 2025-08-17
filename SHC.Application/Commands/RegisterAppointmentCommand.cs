@@ -10,8 +10,8 @@ namespace SHC.Application.Commands
     public class RegisterAppointmentCommand : ICommand
     {
         public DateTime AppointmentDate { get; set; }
-        public bool IsUrgent { get; set; }
-        public int Duration { get; set; }
+        public bool? IsUrgent { get; set; }
+        public int? Duration { get; set; }
         public Guid AssignedDoctorId { get; set; }
         public Guid PatientId { get; set; }
     }

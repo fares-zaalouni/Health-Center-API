@@ -15,6 +15,7 @@ namespace SHC.Application.Commands
         public string Cin { get; set; }
         public DateTime Dob { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
         public string PhoneNumber { get; set; }
         public string? EmergencyContactName { get; set; }
         public string? EmergencyContactPhone { get; set; }

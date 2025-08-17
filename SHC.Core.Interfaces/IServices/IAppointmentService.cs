@@ -9,6 +9,6 @@ namespace SHC.Core.Interfaces.IServices
 {
     public interface IAppointmentService
     {
-        void ValidateAppointment(Appointment appointment, List<Appointment> patientAppointments);
+        void ValidateAppointment(Appointment appointment, IList<Appointment> patientAppointments);
     }
 }
