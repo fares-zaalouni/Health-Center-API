@@ -5,13 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SHC.Core.Interfaces
+namespace SHC.Core.Interfaces.IRepositories
 {
-    public interface IUserRepository
+    public interface IUserCommandRepository
     {
-        Task<User?> GetByIdAsync(Guid userId);
-        Task<User> AddAsync(User user);              
+        Task AddAsync(User user);
         Task DeleteAsync(Guid patientId);
-
     }
 }

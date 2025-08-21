@@ -1056,6 +1056,7 @@
       },
       "SHC.Core.Services/1.0.0": {
         "dependencies": {
+          "Microsoft.Extensions.Identity.Core": "9.0.8",
           "SHC.Core.Domain": "1.0.0",
           "SHC.Core.Interfaces": "1.0.0"
         },

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using SHC.Core.Domain.Doctor;
 using SHC.Core.Domain.Patient;
 using SHC.Core.Domain.User;
 
@@ -9,6 +10,7 @@ namespace SHC.Infrastructure.Data
     public class SHCContext:DbContext
     {
         public DbSet<Patient> DBPatient { get; set; }
+        public DbSet<Doctor> DBDoctor { get; set; }
         public DbSet<Allergy> DBAllergy { get; set; }
         public DbSet<Appointment> DBAppointment { get; set; }
         public DbSet<MedicalCondition> DBMedicalCondition { get; set; }
@@ -35,12 +37,16 @@ namespace SHC.Infrastructure.Data
                 .EnableSensitiveDataLogging()
                  .EnableDetailedErrors()
                  .LogTo(Console.WriteLine, LogLevel.Information);
-            optionsBuilder.UseLazyLoadingProxies();
+            //optionsBuilder.UseLazyLoadingProxies();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Appointment>()
                 .Property(a => a.Id)
+                .ValueGeneratedNever();
+
+            modelBuilder.Entity<Doctor>()
+                .Property(d => d.Id)
                 .ValueGeneratedNever();
 
             modelBuilder.Entity<Patient>()
@@ -76,26 +82,39 @@ namespace SHC.Infrastructure.Data
             modelBuilder.Entity<Patient>()
                 .HasMany(p => p.Appointments)
                 .WithOne()
-                .HasForeignKey(a => a.PatientId);
+                .HasForeignKey("PatientId");
 
             modelBuilder.Entity<Patient>()
-                .HasMany<Allergy>("Allergies")
+                .HasMany(p => p.Allergies)
                 .WithOne()
                 .HasForeignKey("PatientId");
 
             modelBuilder.Entity<Patient>()
-                .HasMany<MedicalCondition>("MedicalConditions")
+                .HasMany(p => p.MedicalConditions)
                 .WithOne()
                 .HasForeignKey("PatientId");
 
             modelBuilder.Entity<Patient>()
-                .HasMany<MedicalPlan>("MedicalPlans")
+                .HasMany(p => p.MedicalPlans)
                 .WithOne()
                 .HasForeignKey("PatientId");
+
+            modelBuilder.Entity<MedicalPlan>()
+                .HasMany(mp => mp.MedicationIntakes)
+                .WithOne()
+                .HasForeignKey("MedicalPlanId");
 
             modelBuilder.Entity<Patient>()
                 .Property(p => p.UserId)
                 .IsRequired();
+
+            modelBuilder.Entity<Doctor>()
+                .Property(d => d.UserId)
+                .IsRequired();
+
+            modelBuilder.Entity<Doctor>()
+                .HasOne<User>()
+                .WithOne();
         }
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {

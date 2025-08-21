@@ -5,6 +5,37 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/Auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginCommand"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginCommand"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/Patient/register": {
       "post": {
         "tags": [
@@ -95,6 +126,24 @@
         "type": "integer",
         "format": "int32"
       },
+      "LoginCommand": {
+        "type": "object",
+        "properties": {
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "loginType": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "RegisterAppointmentCommand": {
         "type": "object",
         "properties": {
@@ -133,13 +182,13 @@
             "type": "string",
             "nullable": true
           },
-          "cin": {
-            "type": "string",
-            "nullable": true
-          },
           "dob": {
             "type": "string",
             "format": "date-time"
+          },
+          "cin": {
+            "type": "string",
+            "nullable": true
           },
           "email": {
             "type": "string",

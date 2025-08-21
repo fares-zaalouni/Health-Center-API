@@ -11,7 +11,7 @@ namespace SHC.Core.Domain.Patient
         public Guid Id { get; private set; }
         public float Doze { get; private set; }
         public DateTime IntakeTime { get; private set; }
-        public Guid PatientId;
+        public Guid MedicalPlanId { get; set; }
 
         public MedicationIntake(Guid id, float doze, DateTime intakeTime)
         {

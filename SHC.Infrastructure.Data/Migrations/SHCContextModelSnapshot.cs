@@ -18,12 +18,44 @@ namespace SHC.Infrastructure.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.10")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("SHC.Core.Domain.Doctor.Doctor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Cin")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Dob")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Firstname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lastname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("DBDoctor");
+                });
 
             modelBuilder.Entity("SHC.Core.Domain.Patient.Allergy", b =>
                 {
@@ -140,7 +172,7 @@ namespace SHC.Infrastructure.Data.Migrations
                     b.Property<DateTime>("IntakeTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("MedicalPlanId")
+                    b.Property<Guid>("MedicalPlanId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -160,6 +192,9 @@ namespace SHC.Infrastructure.Data.Migrations
 
                     b.Property<string>("Cin")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Dob")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -199,9 +234,6 @@ namespace SHC.Infrastructure.Data.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Dob")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("HashedPassword")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -213,6 +245,15 @@ namespace SHC.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DBUser");
+                });
+
+            modelBuilder.Entity("SHC.Core.Domain.Doctor.Doctor", b =>
+                {
+                    b.HasOne("SHC.Core.Domain.User.User", null)
+                        .WithOne()
+                        .HasForeignKey("SHC.Core.Domain.Doctor.Doctor", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SHC.Core.Domain.Patient.Allergy", b =>
@@ -255,7 +296,9 @@ namespace SHC.Infrastructure.Data.Migrations
                 {
                     b.HasOne("SHC.Core.Domain.Patient.MedicalPlan", null)
                         .WithMany("MedicationIntakes")
-                        .HasForeignKey("MedicalPlanId");
+                        .HasForeignKey("MedicalPlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SHC.Core.Domain.Patient.Patient", b =>

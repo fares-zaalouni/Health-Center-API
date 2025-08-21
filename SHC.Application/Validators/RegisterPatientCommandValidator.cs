@@ -21,8 +21,8 @@ namespace SHC.Application.Validators
                 .MaximumLength(50);
 
             RuleFor(x => x.Cin)
-                .NotEmpty().WithMessage("CIN is required.")
-                .Length(8).WithMessage("CIN must be exactly 8 characters.");
+                .Length(8).WithMessage("CIN must be exactly 8 characters.")
+                .When(x => !string.IsNullOrWhiteSpace(x.Cin));
 
             RuleFor(x => x.Dob)
                 .LessThan(DateTime.Today).WithMessage("Date of birth must be in the past.");
@@ -34,8 +34,8 @@ namespace SHC.Application.Validators
                 .Matches(@"\d").WithMessage("Password must contain at least one number.");
 
             RuleFor(x => x.Email)
-                .NotEmpty().WithMessage("Email is required.")
-                .EmailAddress().WithMessage("Invalid email format.");
+                .EmailAddress().WithMessage("Invalid email format.")
+                .When(x => !string.IsNullOrWhiteSpace(x.Email));
 
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty().WithMessage("Phone number is required.")
@@ -45,10 +45,12 @@ namespace SHC.Application.Validators
                 .IsInEnum().WithMessage("Invalid blood type.");
 
             RuleFor(x => x.Weight)
-                .GreaterThan(0).WithMessage("Weight must be greater than 0.");
+                .GreaterThan(0).WithMessage("Weight must be greater than 0.")
+                .When(x => x.Weight.HasValue);
 
             RuleFor(x => x.Height)
-                .GreaterThan(0).WithMessage("Height must be greater than 0.");
+                .GreaterThan(0).WithMessage("Height must be greater than 0.")
+                .When(x => x.Height.HasValue);
 
             // Optional fields
 

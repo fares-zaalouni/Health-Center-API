@@ -11,6 +11,6 @@ namespace SHC.Core.Domain.Patient
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public Guid PatientId;
+        public Guid PatientId { get; set; }
     }
 }

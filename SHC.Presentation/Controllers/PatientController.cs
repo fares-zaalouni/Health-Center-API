@@ -12,12 +12,12 @@ namespace SHC.Presentation.Controllers
     [ApiController]
     public class PatientController : ControllerBase
     {
-        private readonly IHandler<RegisterPatientCommand, Patient> _registerPatientHandler;
-        private readonly IHandler<RegisterAppointmentCommand, Unit> _registerAppointmentHandler;
+        private readonly IHandler<RegisterPatientCommand, Result<Patient>> _registerPatientHandler;
+        private readonly IHandler<RegisterAppointmentCommand, Result<Unit>> _registerAppointmentHandler;
 
         public PatientController(
-            IHandler<RegisterPatientCommand, Patient> registerPatientHandler,
-            IHandler<RegisterAppointmentCommand, Unit> registerAppointmentHandler
+            IHandler<RegisterPatientCommand, Result<Patient>> registerPatientHandler,
+            IHandler<RegisterAppointmentCommand, Result<Unit>> registerAppointmentHandler
             )
         {
             _registerPatientHandler = registerPatientHandler;
@@ -36,7 +36,11 @@ namespace SHC.Presentation.Controllers
         public async Task<IActionResult> RegisterAppointment(Guid id, RegisterAppointmentCommand command)
         {
             command.PatientId = id;
-            await _registerAppointmentHandler.Handle(command);
+            Result<Unit> result = await _registerAppointmentHandler.Handle(command);
+            if(result.IsFailure)
+            {
+                return BadRequest(result.Error);
+            }
             return Ok();
         }
     }

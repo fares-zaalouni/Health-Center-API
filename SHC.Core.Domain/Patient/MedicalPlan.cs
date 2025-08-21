@@ -14,8 +14,8 @@ namespace SHC.Core.Domain.Patient
         public DateOnly StartDate { get; private set; }
         public DateOnly EndDate { get; private set; }
         public MedicationType MedicationType { get; private set; }
-        public virtual IList<MedicationIntake> MedicationIntakes { get; private set; }
-        public Guid PatientId;
+        public IList<MedicationIntake> MedicationIntakes { get; private set; }
+        public Guid PatientId { get; set; }
 
         public MedicalPlan(
             Guid id,

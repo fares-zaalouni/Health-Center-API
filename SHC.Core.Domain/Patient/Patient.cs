@@ -12,6 +12,7 @@ namespace SHC.Core.Domain.Patient
         public Guid UserId { get; private set; }
         public string Firstname { get; private set; }
         public string Lastname { get; private set; }
+        public DateTime Dob { get; private set; }
         public string? Cin { get; private set; }
         public string? Email { get; private set; }
         public string? EmergencyContactName { get; private set; }
@@ -19,17 +20,18 @@ namespace SHC.Core.Domain.Patient
         public BloodType? BloodType { get; private set; }
         public float? Weight { get; private set; }
         public float? Height { get; private set; }
-        public virtual IList<Appointment> Appointments { get; set; } = new List<Appointment>();
-        public virtual IList<Allergy> Allergies { get; set; } = new List<Allergy>();
-        public virtual IList<MedicalCondition> MedicalConditions { get; set; } = new List<MedicalCondition>();
-        public virtual IList<MedicalPlan> MedicalPlans { get; set; } = new List<MedicalPlan>();
+        public IList<Appointment> Appointments { get; set; } = new List<Appointment>();
+        public IList<Allergy> Allergies { get; set; } = new List<Allergy>();
+        public IList<MedicalCondition> MedicalConditions { get; set; } = new List<MedicalCondition>();
+        public IList<MedicalPlan> MedicalPlans { get; set; } = new List<MedicalPlan>();
 
-        public Patient(Guid id, Guid userId, string firstname, string lastname, string? cin, string? email, string? emergencyContactName, string? emergencyContactPhone, BloodType? bloodType, float? weight, float? height)
+        public Patient(Guid id, Guid userId, string firstname, string lastname, DateTime dob, string? cin, string? email, string? emergencyContactName, string? emergencyContactPhone, BloodType? bloodType, float? weight, float? height)
         {
             Id = id;
             UserId = userId;
             Firstname = firstname;
             Lastname = lastname;
+            Dob = dob;
             Cin = cin;
             Email = email;
             EmergencyContactName = emergencyContactName;

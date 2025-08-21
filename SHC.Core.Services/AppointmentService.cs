@@ -12,7 +12,7 @@ namespace SHC.Core.Services
     public class AppointmentService : IAppointmentService
     {
         public AppointmentService() { }
-        public void ValidateAppointment(Appointment appointment, IList<Appointment> patientAppointments) {
+        public List<Appointment> ValidateAppointment(Appointment appointment, IList<Appointment> patientAppointments) {
             if (appointment == null) throw new ArgumentNullException(nameof(appointment));
 
             if (appointment.DurationInMin <= 0)
@@ -25,11 +25,11 @@ namespace SHC.Core.Services
 
             var newEnd = appointment.AppointmentDate.AddMinutes(appointment.DurationInMin);
 
-            Appointment? overlapped = patientAppointments.Where(a =>
+            List<Appointment> overlapped = patientAppointments.Where(a =>
                 newStart <= a.AppointmentDate.AddMinutes(a.DurationInMin) &&
-                a.AppointmentDate <= newEnd).FirstOrDefault();
+                a.AppointmentDate <= newEnd).ToList();
 
-            if (overlapped != null) throw new AppointmentOverlapException(overlapped.PatientId);
+            return overlapped;
         }
     }
 }
