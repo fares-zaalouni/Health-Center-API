@@ -1,0 +1,12 @@
+C:\Users\fares\source\repos\SHC\SHC.Core.Projections\bin\Debug\net8.0\SHC.Core.Projections.deps.json
+C:\Users\fares\source\repos\SHC\SHC.Core.Projections\bin\Debug\net8.0\SHC.Core.Projections.dll
+C:\Users\fares\source\repos\SHC\SHC.Core.Projections\bin\Debug\net8.0\SHC.Core.Projections.pdb
+C:\Users\fares\source\repos\SHC\SHC.Core.Projections\obj\Debug\net8.0\SHC.Core.Projections.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\fares\source\repos\SHC\SHC.Core.Projections\obj\Debug\net8.0\SHC.Core.Projections.AssemblyInfoInputs.cache
+C:\Users\fares\source\repos\SHC\SHC.Core.Projections\obj\Debug\net8.0\SHC.Core.Projections.AssemblyInfo.cs
+C:\Users\fares\source\repos\SHC\SHC.Core.Projections\obj\Debug\net8.0\SHC.Core.Projections.csproj.CoreCompileInputs.cache
+C:\Users\fares\source\repos\SHC\SHC.Core.Projections\obj\Debug\net8.0\SHC.Core.Projections.sourcelink.json
+C:\Users\fares\source\repos\SHC\SHC.Core.Projections\obj\Debug\net8.0\SHC.Core.Projections.dll
+C:\Users\fares\source\repos\SHC\SHC.Core.Projections\obj\Debug\net8.0\refint\SHC.Core.Projections.dll
+C:\Users\fares\source\repos\SHC\SHC.Core.Projections\obj\Debug\net8.0\SHC.Core.Projections.pdb
+C:\Users\fares\source\repos\SHC\SHC.Core.Projections\obj\Debug\net8.0\ref\SHC.Core.Projections.dll

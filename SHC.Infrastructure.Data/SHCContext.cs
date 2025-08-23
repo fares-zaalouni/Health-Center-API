@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using SHC.Core.Domain.Doctor;
 using SHC.Core.Domain.Patient;
 using SHC.Core.Domain.User;
+using SHC.Infrastructure.Models;
 
 
 namespace SHC.Infrastructure.Data
@@ -17,6 +18,7 @@ namespace SHC.Infrastructure.Data
         public DbSet<MedicationIntake> DBMedicationIntake { get; set; }
         public DbSet<MedicalPlan> DBMedicalPlan { get; set; }
         public DbSet<User> DBUser { get; set; }
+        public DbSet<RefreshToken> DBRefrechToken { get; set; }
 
         /*private AMContext _context;
         private AMContext()
@@ -73,10 +75,26 @@ namespace SHC.Infrastructure.Data
                 .Property(m => m.Id)
                 .ValueGeneratedNever();
 
+            modelBuilder.Entity<RefreshToken>()
+                .Property(rt => rt.Id)
+                .ValueGeneratedNever();
+
+            modelBuilder.Entity<RefreshToken>()
+                .HasOne<RefreshToken>()         
+                .WithOne()                     
+                .HasForeignKey<RefreshToken>(rt => rt.ReplacedByToken) 
+                .IsRequired(false);
+
             modelBuilder.Entity<User>()
                .HasMany<Patient>() 
                .WithOne()      
                .HasForeignKey(p => p.UserId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>()
+               .HasMany<RefreshToken>()
+               .WithOne()
+               .HasForeignKey(r => r.UserId)
                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Patient>()

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SHC.Core.Domain.Patient;
 using SHC.Core.Interfaces.IRepositories;
+using SHC.Core.Projections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,13 +22,13 @@ public class PatientQueryRepository : IPatientQueryRepository
     {
         return _dbContext.DBPatient.FindAsync(patientId).AsTask();
     }
-    public Task<(string firstname, string lastname)> GetFirstAndLastNameByPhoneNumberAsync(string phoneNumber)
+    public Task<FullName?> GetFirstAndLastNameByPhoneNumberAsync(string phoneNumber)
     {
         return (
             from u in _dbContext.DBUser
             join p in _dbContext.DBPatient on u.Id equals p.UserId
             where u.PhoneNumber == phoneNumber
-            select new ValueTuple<string, string>(p.Firstname, p.Lastname)
+            select new FullName(p.Firstname, p.Lastname)
         ).FirstOrDefaultAsync();
     }
     public IQueryable<Patient> Query()

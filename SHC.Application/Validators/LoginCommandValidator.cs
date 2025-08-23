@@ -19,11 +19,11 @@ public class LoginCommandValidator : AbstractValidator<LoginCommand>
             .MinimumLength(6)
             .WithMessage("Password must be at least 6 characters long.");
 
-        RuleFor(x => x.LoginType)
+        RuleFor(x => x.Role)
             .Empty()
-            .WithMessage("Login type must be empty.")
-            .Matches(@"^(Patient|Doctor)$")
-            .WithMessage("Login type must be either 'Patient' or 'Doctor'.");
+            .WithMessage("Role should not be provided during login.");
+
+
 
     }
 }

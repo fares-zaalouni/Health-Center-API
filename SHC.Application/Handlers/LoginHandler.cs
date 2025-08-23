@@ -6,6 +6,7 @@ using SHC.Core.Domain.User;
 using SHC.Core.Interfaces;
 using SHC.Core.Interfaces.IRepositories;
 using SHC.Core.Interfaces.IServices;
+using SHC.Core.Projections;
 
 namespace SHC.Application.Handlers;
 
@@ -32,12 +33,11 @@ public class LoginHandler : IHandler<LoginCommand, Result<LoginResponseDTO>>
         {
             return Result<LoginResponseDTO>.Failure("Invalid phone number or password.");
         }
-        (string firstname, string lastname)? userInfo = await _patientQueryRepository.GetFirstAndLastNameByPhoneNumberAsync(command.PhoneNumber);
-        Console.WriteLine("Firtname: " + userInfo.Value.firstname + "\n");
+        FullName? userInfo = await _patientQueryRepository.GetFirstAndLastNameByPhoneNumberAsync(command.PhoneNumber);
         if (userInfo == null)
         {
             return Result<LoginResponseDTO>.Failure("User not found.");
         }
-        return Result<LoginResponseDTO>.Success(new LoginResponseDTO(userInfo?.firstname, userInfo?.lastname, "", ""));
+        return Result<LoginResponseDTO>.Success(new LoginResponseDTO(userInfo?.FirstName!, userInfo?.LastName!, "", ""));
     }
 }

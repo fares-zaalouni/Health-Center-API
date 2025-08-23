@@ -986,10 +986,19 @@
       },
       "SHC.Core.Interfaces/1.0.0": {
         "dependencies": {
-          "SHC.Core.Domain": "1.0.0"
+          "SHC.Core.Domain": "1.0.0",
+          "SHC.Core.Projections": "1.0.0"
         },
         "runtime": {
           "SHC.Core.Interfaces.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "SHC.Core.Projections/1.0.0": {
+        "runtime": {
+          "SHC.Core.Projections.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -1569,6 +1578,11 @@
       "sha512": ""
     },
     "SHC.Core.Interfaces/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SHC.Core.Projections/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

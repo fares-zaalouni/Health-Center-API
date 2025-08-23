@@ -1,4 +1,5 @@
 ﻿using SHC.Core.Domain.Patient;
+using SHC.Core.Projections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,5 @@ public interface IPatientQueryRepository
 {
     Task<Patient?> GetByIdAsync(Guid patientId);
     IQueryable<Patient> Query();
-    Task<(string firstname, string lastname)> GetFirstAndLastNameByPhoneNumberAsync(string phoneNumber);
+    Task<FullName?> GetFirstAndLastNameByPhoneNumberAsync(string phoneNumber);
 }

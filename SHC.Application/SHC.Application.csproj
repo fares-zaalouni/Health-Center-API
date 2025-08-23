@@ -14,6 +14,8 @@
   <ItemGroup>
     <ProjectReference Include="..\SHC.Core.Domain\SHC.Core.Domain.csproj" />
     <ProjectReference Include="..\SHC.Core.Interfaces\SHC.Core.Interfaces.csproj" />
+    <ProjectReference Include="..\SHC.Core.Projections\SHC.Core.Projections.csproj" />
+    <ProjectReference Include="..\SHC.Infrastructure.Security\SHC.Infrastructure.Security.csproj" />
   </ItemGroup>
 
 </Project>

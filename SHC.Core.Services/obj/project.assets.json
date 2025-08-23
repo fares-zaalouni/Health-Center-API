@@ -221,13 +221,24 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
-          "SHC.Core.Domain": "1.0.0"
+          "SHC.Core.Domain": "1.0.0",
+          "SHC.Core.Projections": "1.0.0"
         },
         "compile": {
           "bin/placeholder/SHC.Core.Interfaces.dll": {}
         },
         "runtime": {
           "bin/placeholder/SHC.Core.Interfaces.dll": {}
+        }
+      },
+      "SHC.Core.Projections/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/SHC.Core.Projections.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SHC.Core.Projections.dll": {}
         }
       }
     }
@@ -663,6 +674,11 @@
       "type": "project",
       "path": "../SHC.Core.Interfaces/SHC.Core.Interfaces.csproj",
       "msbuildProject": "../SHC.Core.Interfaces/SHC.Core.Interfaces.csproj"
+    },
+    "SHC.Core.Projections/1.0.0": {
+      "type": "project",
+      "path": "../SHC.Core.Projections/SHC.Core.Projections.csproj",
+      "msbuildProject": "../SHC.Core.Projections/SHC.Core.Projections.csproj"
     }
   },
   "projectFileDependencyGroups": {

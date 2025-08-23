@@ -28,7 +28,7 @@ namespace SHC.Presentation.Controllers
             Result<LoginResponseDTO> loginDTO = await _loginHandler.Handle(request);
             if(loginDTO.IsFailure)
             {
-                return BadRequest(loginDTO.Error);
+                return NotFound(loginDTO.Error);
             }
             return Ok(loginDTO.Value);
         }
