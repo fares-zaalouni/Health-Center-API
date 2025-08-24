@@ -1,4 +1,5 @@
-﻿using SHC.Application.Commands;
+﻿using FluentValidation;
+using SHC.Application.Commands;
 using SHC.Application.Common;
 using SHC.Application.DTOs;
 using SHC.Core.Domain.Patient;
@@ -18,13 +19,19 @@ public class LoginHandler : IHandler<LoginCommand, Result<LoginResponseDTO>>
     private readonly IPatientQueryRepository _patientQueryRepository;
     private readonly IDoctorQueryRepository _doctorQueryRepository;
     private readonly IAuthService _authService;
+    private readonly IValidator<LoginCommand> _validator;
 
+
+
+    // TO DO
+    // Make more specific Exceptions and Handle them in the Middleware
     public LoginHandler(
         IUserService userService,
         IUserQueryRepository userQueryRepository,
         IPatientQueryRepository patientQueryRepository,
         IDoctorQueryRepository doctorQueryRepository,
-        IAuthService authService
+        IAuthService authService,
+        IValidator<LoginCommand> validator
         )
     {
         _userService = userService ?? throw new ArgumentNullException(nameof(userService));
@@ -32,14 +39,23 @@ public class LoginHandler : IHandler<LoginCommand, Result<LoginResponseDTO>>
         _patientQueryRepository = patientQueryRepository ?? throw new ArgumentNullException(nameof(patientQueryRepository));
         _doctorQueryRepository = doctorQueryRepository ?? throw new ArgumentNullException(nameof(doctorQueryRepository));
         _authService = authService ?? throw new ArgumentNullException(nameof(authService));
+        _validator = validator ?? throw new ArgumentNullException(nameof(validator));
     }
     public async Task<Result<LoginResponseDTO>> Handle(LoginCommand command)
     {
+        var result = await _validator.ValidateAsync(command);
+        if(result.IsValid == false)
+        {
+            var errors = string.Join("\n", result.Errors.Select(e => e.ErrorMessage));
+            return Result<LoginResponseDTO>.Failure($"Validation failed:\n{errors}");
+        }
+
         bool isValid =  await _userService.IsPasswordValidAsync(command.PhoneNumber, command.Password);
         if (!isValid)
         {
             return Result<LoginResponseDTO>.Failure("Invalid phone number or password.");
         }
+
         if(_userQueryRepository.HasRoleByPhoneNumber(command.PhoneNumber, command.Role) == false)
         {
             return Result<LoginResponseDTO>.Failure("Forbidden");
@@ -57,21 +73,25 @@ public class LoginHandler : IHandler<LoginCommand, Result<LoginResponseDTO>>
         }
 
         RefreshToken refreshToken;
-        SecurityToken token;
+        AccessToken token;
         Guid? userId = await _userQueryRepository.GetIdByPhoneNumber(command.PhoneNumber);
         if (userId == null)
         {
             throw new Exception("User ID should not be null here.");
         }
-        _authService.GenerateLoginTokens((Guid)userId, command.PhoneNumber, Guid.NewGuid(), command.Role,  out token,  out refreshToken);
-        _authService.SaveRefreshToken(refreshToken);
+        var tokens = _authService.GenerateLoginTokens((Guid)userId, command.PhoneNumber, Guid.NewGuid(), command.Role);
+        _authService.SaveRefreshToken(tokens.RefreshToken);
         RefreshTokenDTO refreshTokenDTO = new RefreshTokenDTO
         {
-            Id = refreshToken.Id,
-            Created = refreshToken.Created,
-            Expires = refreshToken.Expires,
-            Token = refreshToken.Token
+            Id = tokens.RefreshToken.Id,
+            Expires = tokens.RefreshToken.Expires,
+            Token = tokens.RefreshToken.Token
         };
-        return Result<LoginResponseDTO>.Success(new LoginResponseDTO(userInfo?.FirstName!, userInfo?.LastName!, token, refreshTokenDTO));
+        AccessTokenDTO accessTokenDTO = new AccessTokenDTO
+        {
+            Expires = tokens.AccessToken.Expires,
+            Token = tokens.RefreshToken.Token
+        };
+        return Result<LoginResponseDTO>.Success(new LoginResponseDTO(userInfo?.FirstName!, userInfo?.LastName!, accessTokenDTO, refreshTokenDTO));
     }
 }

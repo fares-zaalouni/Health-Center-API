@@ -21,14 +21,60 @@ public class AuthService : IAuthService
         _refreshTokenRepository = refreshTokenRepository;
         _unitOfWork = unitOfWork;
     }
-    public void GenerateLoginTokens(Guid userId, string phoneNumber, Guid deviceId, Roles role, out SecurityToken token, out RefreshToken refreshToken)
+    public Tokens GenerateLoginTokens(Guid userId, string phoneNumber, Guid deviceId, Roles role)
     {
-        token = _jwtTokenGenerator.GenerateToken(userId, phoneNumber, role);
-        refreshToken = _jwtTokenGenerator.GenerateRefreshToken(userId, deviceId, role);
+        AccessToken token = _jwtTokenGenerator.GenerateToken(userId, phoneNumber, role);
+        RefreshToken refreshToken = _jwtTokenGenerator.GenerateRefreshToken(userId, deviceId, role);
+        return new Tokens
+        {
+            AccessToken = token,
+            RefreshToken = refreshToken
+        };
     }
-    public void SaveRefreshToken(RefreshToken refreshToken)
+    public async Task SaveRefreshToken(RefreshToken refreshToken)
     {
-        _refreshTokenRepository.AddAsync(refreshToken);
-        _unitOfWork.SaveAsync();
+        await _refreshTokenRepository.AddAsync(refreshToken);
+        await _unitOfWork.SaveAsync();
+    }
+
+    // NEEDS TO ADD TAKING CARE OF REVOKED TOKENS
+    public async Task<RefreshToken?> ValidateRefreshToken(string token, Guid userId, Guid deviceId)
+    {
+        RefreshToken? refreshToken = await _refreshTokenRepository.GetByTokenAndDeviceId(token, deviceId);
+        if (refreshToken == null || refreshToken.Expires < DateTime.UtcNow)
+            return null;
+        if (refreshToken.Revoked.HasValue)
+        {
+            // Log token reuse attempt }
+            return null;
+        }
+        if (refreshToken.UserId != userId)
+        {
+            // Log token user mismatch  
+            return null;
+        }
+        return refreshToken;
+    }
+
+    public async Task RevokeRefreshToken(string refreshToken, Guid deviceId, Guid? replacedByToken = null)
+    {
+        RefreshToken? token = await _refreshTokenRepository.GetByTokenAndDeviceId(refreshToken, deviceId);
+        if (token == null)
+            throw new Exception("Token not found");
+
+        token.Revoked = DateTime.UtcNow;
+        token.ReplacedByToken = replacedByToken;
+        await _unitOfWork.SaveAsync();
+    }
+
+    public async Task<Tokens?> RenewTokens(string refreshToken, Guid userId, string phoneNumber, Guid deviceId)
+    {
+        RefreshToken? token = await ValidateRefreshToken(refreshToken, userId, deviceId);
+        if (token == null)
+            return null;
+        Tokens newTokens = GenerateLoginTokens(userId, phoneNumber, deviceId, token.Role);
+        await SaveRefreshToken(newTokens.RefreshToken);
+        await RevokeRefreshToken(refreshToken, deviceId, newTokens.RefreshToken.Id);
+        return newTokens;
     }
 }

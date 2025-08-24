@@ -3,7 +3,7 @@ using SHC.Core.Domain.User;
 
 namespace SHC.Infrastructure.Models;
 
-public class RefreshToken
+public record RefreshToken
 {
     public Guid Id { get; set; }
     public string Token { get; set; } = default!;

@@ -6,7 +6,7 @@ namespace SHC.Infrastructure.Security.JWT;
 
 public interface IJwtTokenGenerator
 {
-    SecurityToken GenerateToken(Guid userId, string phoneNumber, Roles role);
+    AccessToken GenerateToken(Guid userId, string phoneNumber, Roles role);
     RefreshToken GenerateRefreshToken(Guid userId, Guid deviceID, Roles role);
 
 }

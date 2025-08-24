@@ -16,7 +16,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
     public JwtTokenGenerator(IOptions<JwtOptions> options)
         => _options = options.Value;
 
-    public Models.SecurityToken GenerateToken(Guid userId, string phoneNumber, Roles role)
+    public Models.AccessToken GenerateToken(Guid userId, string phoneNumber, Roles role)
     {
         var claims = new[]
         {
@@ -35,7 +35,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
             expires: DateTime.UtcNow.AddMinutes(_options.AccessTokenExpirationMinutes),
             signingCredentials: creds);
 
-        return new Models.SecurityToken
+        return new Models.AccessToken
         {
             Token = new JwtSecurityTokenHandler().WriteToken(token),
             Created = DateTime.UtcNow,

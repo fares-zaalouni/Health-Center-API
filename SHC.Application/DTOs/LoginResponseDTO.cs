@@ -5,15 +5,15 @@ namespace SHC.Application.DTOs
 {
     public class LoginResponseDTO
     {
-        public SecurityToken Token { get;}
+        public AccessTokenDTO AccessToken { get;}
         public RefreshTokenDTO RefreshTokenDTO { get; }
         public string Firstname { get; set; }  
         public string Lastname { get; set; }
-        public LoginResponseDTO(string firstName, string lastName, SecurityToken token, RefreshTokenDTO refreshToken)
+        public LoginResponseDTO(string firstName, string lastName, AccessTokenDTO accessToken, RefreshTokenDTO refreshToken)
         {
             Firstname = firstName;
             Lastname = lastName;
-            Token = token;
+            AccessToken = accessToken;
             RefreshTokenDTO = refreshToken;
         }
     }

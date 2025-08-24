@@ -25,6 +25,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 //register validators
 builder.Services.AddScoped<IValidator<RegisterPatientCommand>, RegisterPatientCommandValidator>();
 builder.Services.AddScoped<IValidator<RegisterAppointmentCommand>, RegisterAppointmentCommandValidator>();
+builder.Services.AddScoped<IValidator<LoginCommand>, LoginCommandValidator>();
 
 //register repositories
 builder.Services.AddScoped<IPatientCommandRepository, PatientCommandRepository>();

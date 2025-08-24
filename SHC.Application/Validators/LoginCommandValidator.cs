@@ -23,7 +23,5 @@ public class LoginCommandValidator : AbstractValidator<LoginCommand>
             .Empty()
             .WithMessage("Role should not be provided during login.");
 
-
-
     }
 }

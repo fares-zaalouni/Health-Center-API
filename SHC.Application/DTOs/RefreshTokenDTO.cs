@@ -8,5 +8,4 @@ public class RefreshTokenDTO
     public Guid Id { get; set; }
     public string Token { get; set; } = default!;
     public DateTime Expires { get; set; }
-    public DateTime Created { get; set; }
 }
