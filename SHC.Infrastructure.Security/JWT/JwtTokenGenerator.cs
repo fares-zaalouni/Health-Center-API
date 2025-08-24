@@ -16,15 +16,15 @@ public class JwtTokenGenerator : IJwtTokenGenerator
     public JwtTokenGenerator(IOptions<JwtOptions> options)
         => _options = options.Value;
 
-    public SecurityToken GenerateToken(User user, Roles role)
+    public Models.SecurityToken GenerateToken(Guid userId, string phoneNumber, Roles role)
     {
         var claims = new[]
         {
-            new Claim(ClaimTypes.MobilePhone, user.PhoneNumber),
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.MobilePhone, phoneNumber),
+            new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
             new Claim(ClaimTypes.Role, role.ToString())
         };
-
+        Console.WriteLine(_options.Key);
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.Key));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -35,7 +35,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
             expires: DateTime.UtcNow.AddMinutes(_options.AccessTokenExpirationMinutes),
             signingCredentials: creds);
 
-        return new SecurityToken
+        return new Models.SecurityToken
         {
             Token = new JwtSecurityTokenHandler().WriteToken(token),
             Created = DateTime.UtcNow,

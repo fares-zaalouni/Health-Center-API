@@ -163,3 +163,9 @@ C:\Users\fares\source\repos\SHC\SHC.Presentation\bin\Debug\net8.0\Microsoft.AspN
 C:\Users\fares\source\repos\SHC\SHC.Presentation\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\fares\source\repos\SHC\SHC.Presentation\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
 C:\Users\fares\source\repos\SHC\SHC.Presentation\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\fares\source\repos\SHC\SHC.Presentation\bin\Debug\net8.0\SHC.Core.Projections.dll
+C:\Users\fares\source\repos\SHC\SHC.Presentation\bin\Debug\net8.0\SHC.Infrastructure.Models.dll
+C:\Users\fares\source\repos\SHC\SHC.Presentation\bin\Debug\net8.0\SHC.Infrastructure.Security.dll
+C:\Users\fares\source\repos\SHC\SHC.Presentation\bin\Debug\net8.0\SHC.Core.Projections.pdb
+C:\Users\fares\source\repos\SHC\SHC.Presentation\bin\Debug\net8.0\SHC.Infrastructure.Models.pdb
+C:\Users\fares\source\repos\SHC\SHC.Presentation\bin\Debug\net8.0\SHC.Infrastructure.Security.pdb

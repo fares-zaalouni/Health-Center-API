@@ -137,9 +137,8 @@
             "type": "string",
             "nullable": true
           },
-          "loginType": {
-            "type": "string",
-            "nullable": true
+          "role": {
+            "$ref": "#/components/schemas/Roles"
           }
         },
         "additionalProperties": false
@@ -225,6 +224,14 @@
           }
         },
         "additionalProperties": false
+      },
+      "Roles": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "format": "int32"
       }
     }
   }

@@ -1,4 +1,6 @@
 ﻿
+using SHC.Core.Domain.User;
+
 namespace SHC.Infrastructure.Models;
 
 public class RefreshToken

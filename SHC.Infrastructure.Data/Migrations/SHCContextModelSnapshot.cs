@@ -242,9 +242,54 @@ namespace SHC.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Roles")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("DBUser");
+                });
+
+            modelBuilder.Entity("SHC.Infrastructure.Models.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DeviceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Expires")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("ReplacedByToken")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("Revoked")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReplacedByToken")
+                        .IsUnique()
+                        .HasFilter("[ReplacedByToken] IS NOT NULL");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("DBRefreshToken");
                 });
 
             modelBuilder.Entity("SHC.Core.Domain.Doctor.Doctor", b =>
@@ -303,6 +348,19 @@ namespace SHC.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("SHC.Core.Domain.Patient.Patient", b =>
                 {
+                    b.HasOne("SHC.Core.Domain.User.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SHC.Infrastructure.Models.RefreshToken", b =>
+                {
+                    b.HasOne("SHC.Infrastructure.Models.RefreshToken", null)
+                        .WithOne()
+                        .HasForeignKey("SHC.Infrastructure.Models.RefreshToken", "ReplacedByToken");
+
                     b.HasOne("SHC.Core.Domain.User.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")

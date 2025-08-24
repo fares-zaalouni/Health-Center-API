@@ -1,4 +1,4 @@
-﻿namespace SHC.Infrastructure.Models;
+﻿namespace SHC.Core.Domain.User;
 
 public enum Roles
 {

@@ -332,7 +332,11 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\fares\\source\\repos\\SHC\\SHC.Core.Domain\\SHC.Core.Domain.csproj": {
+                "projectPath": "C:\\Users\\fares\\source\\repos\\SHC\\SHC.Core.Domain\\SHC.Core.Domain.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

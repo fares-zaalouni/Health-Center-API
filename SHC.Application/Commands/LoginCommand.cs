@@ -1,6 +1,5 @@
-﻿using SHC.Core.Interfaces;
-using SHC.Infrastructure.Security;
-
+﻿using SHC.Core.Domain.User;
+using SHC.Core.Interfaces;
 
 namespace SHC.Application.Commands;
 

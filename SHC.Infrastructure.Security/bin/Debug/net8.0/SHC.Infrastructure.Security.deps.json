@@ -10,6 +10,8 @@
         "dependencies": {
           "Microsoft.Extensions.Options": "8.0.2",
           "SHC.Core.Domain": "1.0.0",
+          "SHC.Core.Interfaces": "1.0.0",
+          "SHC.Infrastructure.Models": "1.0.0",
           "System.IdentityModel.Tokens.Jwt": "8.14.0"
         },
         "runtime": {
@@ -127,6 +129,37 @@
             "fileVersion": "1.0.0.0"
           }
         }
+      },
+      "SHC.Core.Interfaces/1.0.0": {
+        "dependencies": {
+          "SHC.Core.Domain": "1.0.0",
+          "SHC.Core.Projections": "1.0.0"
+        },
+        "runtime": {
+          "SHC.Core.Interfaces.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "SHC.Core.Projections/1.0.0": {
+        "runtime": {
+          "SHC.Core.Projections.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "SHC.Infrastructure.Models/1.0.0": {
+        "dependencies": {
+          "SHC.Core.Domain": "1.0.0"
+        },
+        "runtime": {
+          "SHC.Infrastructure.Models.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
       }
     }
   },
@@ -207,6 +240,21 @@
       "hashPath": "system.identitymodel.tokens.jwt.8.14.0.nupkg.sha512"
     },
     "SHC.Core.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SHC.Core.Interfaces/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SHC.Core.Projections/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SHC.Infrastructure.Models/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

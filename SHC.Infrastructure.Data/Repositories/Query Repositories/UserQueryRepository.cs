@@ -30,8 +30,20 @@ public class UserQueryRepository : IUserQueryRepository
         return _dbContext.DBUser.FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber);
     }
 
+    public Task<Guid?> GetIdByPhoneNumber(string phoneNumber)
+    {
+        return _dbContext.DBUser.Where(u => u.PhoneNumber.Equals(phoneNumber))
+            .Select(u => (Guid?)u.Id)
+            .FirstOrDefaultAsync();
+    }
     public IQueryable<User> Query()
     {
         return _dbContext.DBUser.AsQueryable();
+    }
+
+    public bool HasRoleByPhoneNumber(string phoneNumber, Roles role)
+    {
+        return _dbContext.DBUser
+            .Any(u => u.PhoneNumber == phoneNumber && u.Roles.Contains(role));
     }
 }

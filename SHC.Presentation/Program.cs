@@ -14,6 +14,9 @@ using SHC.Infrastructure.Data;
 using SHC.Infrastructure.Data.Repositories;
 using SHC.Infrastructure.Data.Repositories.Command_Repositories;
 using SHC.Infrastructure.Data.Repositories.Query_Repositories;
+using SHC.Infrastructure.Models;
+using SHC.Infrastructure.Security.Authentication;
+using SHC.Infrastructure.Security.JWT;
 using SHC.Presentation.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +33,9 @@ builder.Services.AddScoped<IPatientQueryRepository, PatientQueryRepository>();
 builder.Services.AddScoped<IUserCommandRepository, UserCommandRepository>();
 builder.Services.AddScoped<IUserQueryRepository, UserQueryRepository>();
 
+builder.Services.AddScoped<IDoctorQueryRepository, DoctorQueryRepository>();
+
+builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
 // register handlers 
 builder.Services.AddScoped<IHandler<RegisterPatientCommand, Result<Patient>>, RegisterPatientHandler>();
@@ -40,6 +46,14 @@ builder.Services.AddScoped<IHandler<LoginCommand, Result<LoginResponseDTO>>, Log
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPatientService, PatientService>();
+
+
+//register Security 
+builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.Configure<JwtOptions>(
+    builder.Configuration.GetSection("Jwt"));
+
 
 
 

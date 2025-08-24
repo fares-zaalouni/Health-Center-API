@@ -57,7 +57,9 @@ namespace SHC.Application.Handlers
                 User user = new User(
                     Guid.NewGuid(),
                     _userService.HashPassword(command.Password),
-                    command.PhoneNumber);
+                    command.PhoneNumber,
+                    [Roles.Patient]
+                    );
                 await _unitOfWork.Users.AddAsync(user);
                 userId = user.Id;
             }

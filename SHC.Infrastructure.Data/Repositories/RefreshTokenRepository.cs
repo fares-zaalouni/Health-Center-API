@@ -12,6 +12,6 @@ public class RefreshTokenRepository : IRefreshTokenRepository
     }
     public  async Task AddAsync(RefreshToken refreshToken)
     {
-        await _context.DBRefrechToken.AddAsync(refreshToken).AsTask();
+        await _context.DBRefreshToken.AddAsync(refreshToken).AsTask();
     }
 }

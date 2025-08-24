@@ -18,7 +18,7 @@ namespace SHC.Infrastructure.Data
         public DbSet<MedicationIntake> DBMedicationIntake { get; set; }
         public DbSet<MedicalPlan> DBMedicalPlan { get; set; }
         public DbSet<User> DBUser { get; set; }
-        public DbSet<RefreshToken> DBRefrechToken { get; set; }
+        public DbSet<RefreshToken> DBRefreshToken { get; set; }
 
         /*private AMContext _context;
         private AMContext()

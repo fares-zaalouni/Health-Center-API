@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SHC.Infrastructure.Models;
+using SHC.Infrastructure.Security.JWT;
 
 namespace SHC.Application.DTOs
 {
     public class LoginResponseDTO
     {
-        public string Token { get;}
-        public string RefreshToken { get; }
+        public SecurityToken Token { get;}
+        public RefreshTokenDTO RefreshTokenDTO { get; }
         public string Firstname { get; set; }  
         public string Lastname { get; set; }
-        public LoginResponseDTO(string firstName, string lastName, string token, string refreshToken)
+        public LoginResponseDTO(string firstName, string lastName, SecurityToken token, RefreshTokenDTO refreshToken)
         {
             Firstname = firstName;
             Lastname = lastName;
             Token = token;
-            RefreshToken = refreshToken;
+            RefreshTokenDTO = refreshToken;
         }
     }
 }

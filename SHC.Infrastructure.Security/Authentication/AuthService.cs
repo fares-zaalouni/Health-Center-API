@@ -6,7 +6,7 @@ using SHC.Infrastructure.Security.JWT;
 
 namespace SHC.Infrastructure.Security.Authentication;
 
-public class AuthService
+public class AuthService : IAuthService
 {
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
     private readonly IRefreshTokenRepository _refreshTokenRepository;
@@ -21,12 +21,14 @@ public class AuthService
         _refreshTokenRepository = refreshTokenRepository;
         _unitOfWork = unitOfWork;
     }
-    public void Authenticate(User user, Guid deviceId, Roles role, out SecurityToken token, out RefreshToken refreshToken)
+    public void GenerateLoginTokens(Guid userId, string phoneNumber, Guid deviceId, Roles role, out SecurityToken token, out RefreshToken refreshToken)
     {
-        token = _jwtTokenGenerator.GenerateToken(user, role);
-        RefreshToken newRefreshToken = _jwtTokenGenerator.GenerateRefreshToken(user.Id, deviceId, role);
-        _refreshTokenRepository.AddAsync(newRefreshToken);
+        token = _jwtTokenGenerator.GenerateToken(userId, phoneNumber, role);
+        refreshToken = _jwtTokenGenerator.GenerateRefreshToken(userId, deviceId, role);
+    }
+    public void SaveRefreshToken(RefreshToken refreshToken)
+    {
+        _refreshTokenRepository.AddAsync(refreshToken);
         _unitOfWork.SaveAsync();
-        refreshToken = newRefreshToken;
     }
 }
