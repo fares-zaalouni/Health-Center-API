@@ -44,14 +44,12 @@ namespace SHC.Application.Handlers
             }
              
             bool unique = await _userService.IsUserUnique(command.PhoneNumber);
-            Guid userId = Guid.Empty;
+            Guid? userId = null;
             if (!unique)
             {
-
-                User? user = await _userQueryRepository.GetByPhoneNumberAsync(command.PhoneNumber);
-                if( user == null)
-                    throw new Exception($"User with phone number {command.PhoneNumber} was not returned from dbcontext.");
-                userId = user!.Id;
+                userId = await _userQueryRepository.GetIdByPhoneNumberAsync(command.PhoneNumber);
+                if( userId == null)
+                    throw new Exception("User should not be null here.");                
             } else
             {
                 User user = new User(
@@ -66,7 +64,7 @@ namespace SHC.Application.Handlers
 
             Patient patient = new Patient(
                     Guid.NewGuid(),
-                    userId,
+                    userId.Value,
                     command.Firstname,
                     command.Lastname,
                     command.Dob,
@@ -76,7 +74,8 @@ namespace SHC.Application.Handlers
                     command.EmergencyContactPhone,
                     command.BloodType,
                     command.Weight,
-                    command.Height);
+                    command.Height
+                    );
 
             await _unitOfWork.Patients.AddAsync(patient);
             await _unitOfWork.SaveAsync();

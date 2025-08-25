@@ -3,7 +3,7 @@ using SHC.Infrastructure.Models;
 
 namespace SHC.Application.DTOs;
 
-public class RefreshTokenDTO
+public record RefreshTokenDTO
 {
     public Guid Id { get; set; }
     public string Token { get; set; } = default!;

@@ -20,8 +20,8 @@ public class LoginCommandValidator : AbstractValidator<LoginCommand>
             .WithMessage("Password must be at least 6 characters long.");
 
         RuleFor(x => x.Role)
-            .Empty()
-            .WithMessage("Role should not be provided during login.");
+            .NotEmpty()
+            .WithMessage("Role should be specified");
 
     }
 }

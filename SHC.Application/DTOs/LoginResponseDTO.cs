@@ -3,7 +3,7 @@ using SHC.Infrastructure.Security.JWT;
 
 namespace SHC.Application.DTOs
 {
-    public class LoginResponseDTO
+    public record LoginResponseDTO
     {
         public AccessTokenDTO AccessToken { get;}
         public RefreshTokenDTO RefreshTokenDTO { get; }

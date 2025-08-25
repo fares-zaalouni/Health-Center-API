@@ -16,6 +16,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "SHC.Presentation.Controllers.AuthController",
+    "Method": "RenewTokens",
+    "RelativePath": "api/Auth/renew-tokens",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "SHC.Application.Commands.RenewTokensCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "SHC.Presentation.Controllers.PatientController",
     "Method": "RegisterAppointment",
     "RelativePath": "api/Patient/{id}/appointments/register",

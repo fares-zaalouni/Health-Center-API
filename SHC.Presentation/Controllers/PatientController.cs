@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SHC.Application.Commands;
 using SHC.Application.Common;
 using SHC.Application.Handlers;
 using SHC.Core.Domain.Patient;
+using SHC.Core.Domain.User;
 using SHC.Core.Interfaces;
 
 namespace SHC.Presentation.Controllers
@@ -24,6 +26,7 @@ namespace SHC.Presentation.Controllers
             _registerAppointmentHandler = registerAppointmentHandler;
         }
         [HttpPost]
+        [Authorize(Roles = nameof(Roles.Secretary))]
         [Route("register")]
         public async Task<IActionResult> Register(RegisterPatientCommand command)
         {

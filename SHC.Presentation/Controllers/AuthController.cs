@@ -17,9 +17,14 @@ namespace SHC.Presentation.Controllers
         // You can add methods for login, registration, etc. as needed.
         // Example method for user login (to be implemented):
         private readonly IHandler<LoginCommand, Result<LoginResponseDTO>> _loginHandler;
-        public AuthController(IHandler<LoginCommand, Result<LoginResponseDTO>> handler)
+        private readonly IHandler<RenewTokensCommand, Result<RenewTokensResponseDTO>> _renewTokensHandler;
+        public AuthController(
+            IHandler<LoginCommand, Result<LoginResponseDTO>> loginhHandler,
+            IHandler<RenewTokensCommand, Result<RenewTokensResponseDTO>> renewTokensHandler
+            )
         {
-            _loginHandler = handler;
+            _loginHandler = loginhHandler;
+            _renewTokensHandler = renewTokensHandler;
         }
 
         [HttpPost("login")]
@@ -31,6 +36,15 @@ namespace SHC.Presentation.Controllers
                 return NotFound(loginDTO.Error);
             }
             return Ok(loginDTO.Value);
+        }
+
+        [HttpPost("renew-tokens")]
+        public async Task<IActionResult> RenewTokens(RenewTokensCommand request)
+        {
+            Result<RenewTokensResponseDTO> tokensDTO = await _renewTokensHandler.Handle(request);
+            if(tokensDTO.IsFailure)
+                return Unauthorized(tokensDTO.Error);
+            return Ok(tokensDTO.Value);
         }
     }
 }

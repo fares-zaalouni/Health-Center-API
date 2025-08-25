@@ -1,5 +1,8 @@
-using FluentValidation;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using SHC.Application.Commands;
 using SHC.Application.Common;
 using SHC.Application.DTOs;
@@ -18,6 +21,7 @@ using SHC.Infrastructure.Models;
 using SHC.Infrastructure.Security.Authentication;
 using SHC.Infrastructure.Security.JWT;
 using SHC.Presentation.Middlewares;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -36,12 +40,15 @@ builder.Services.AddScoped<IUserQueryRepository, UserQueryRepository>();
 
 builder.Services.AddScoped<IDoctorQueryRepository, DoctorQueryRepository>();
 
+builder.Services.AddScoped<ISecretaryQueryRepository, SecretaryQueryRepository>();
+
 builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
 // register handlers 
 builder.Services.AddScoped<IHandler<RegisterPatientCommand, Result<Patient>>, RegisterPatientHandler>();
 builder.Services.AddScoped<IHandler<RegisterAppointmentCommand, Result<Unit>>, RegisterAppointmentHandler>();
 builder.Services.AddScoped<IHandler<LoginCommand, Result<LoginResponseDTO>>, LoginHandler>();
+builder.Services.AddScoped<IHandler<RenewTokensCommand, Result<RenewTokensResponseDTO>>, RenewTokensHandler>();
 
 //register domain services
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
@@ -54,8 +61,21 @@ builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.Configure<JwtOptions>(
     builder.Configuration.GetSection("Jwt"));
-
-
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidateAudience = true,
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            ValidateLifetime = true,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
+            ValidateIssuerSigningKey = true,
+        };
+    });
 
 
 //register db context
@@ -68,7 +88,37 @@ builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+
+    // 🔹 Define the Bearer scheme
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter your JWT token in the format: Bearer {your token}"
+    });
+
+    // 🔹 Apply Bearer requirement to operations with [Authorize]
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
 
 var app = builder.Build();
 

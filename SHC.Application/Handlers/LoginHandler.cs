@@ -18,6 +18,7 @@ public class LoginHandler : IHandler<LoginCommand, Result<LoginResponseDTO>>
     private readonly IUserQueryRepository _userQueryRepository;
     private readonly IPatientQueryRepository _patientQueryRepository;
     private readonly IDoctorQueryRepository _doctorQueryRepository;
+    private readonly ISecretaryQueryRepository _secretaryQueryRepository;
     private readonly IAuthService _authService;
     private readonly IValidator<LoginCommand> _validator;
 
@@ -30,6 +31,7 @@ public class LoginHandler : IHandler<LoginCommand, Result<LoginResponseDTO>>
         IUserQueryRepository userQueryRepository,
         IPatientQueryRepository patientQueryRepository,
         IDoctorQueryRepository doctorQueryRepository,
+        ISecretaryQueryRepository secretaryQueryRepository,
         IAuthService authService,
         IValidator<LoginCommand> validator
         )
@@ -38,6 +40,7 @@ public class LoginHandler : IHandler<LoginCommand, Result<LoginResponseDTO>>
         _userQueryRepository = userQueryRepository ?? throw new ArgumentNullException(nameof(userQueryRepository));
         _patientQueryRepository = patientQueryRepository ?? throw new ArgumentNullException(nameof(patientQueryRepository));
         _doctorQueryRepository = doctorQueryRepository ?? throw new ArgumentNullException(nameof(doctorQueryRepository));
+        _secretaryQueryRepository = secretaryQueryRepository ?? throw new ArgumentNullException(nameof(_secretaryQueryRepository));
         _authService = authService ?? throw new ArgumentNullException(nameof(authService));
         _validator = validator ?? throw new ArgumentNullException(nameof(validator));
     }
@@ -61,26 +64,15 @@ public class LoginHandler : IHandler<LoginCommand, Result<LoginResponseDTO>>
             return Result<LoginResponseDTO>.Failure("Forbidden");
         }
 
-        FullName? userInfo = null;
-        if(command.Role == Roles.Patient)
-            userInfo = await _patientQueryRepository.GetFirstAndLastNameByPhoneNumberAsync(command.PhoneNumber);
-        if(command.Role == Roles.Doctor)
-            userInfo = await _doctorQueryRepository.GetFirstAndLastNameByPhoneNumberAsync(command.PhoneNumber);
-
-        if (userInfo == null)
-        {
-            throw new Exception("User info should not be null here.");
-        }
-
-        RefreshToken refreshToken;
-        AccessToken token;
-        Guid? userId = await _userQueryRepository.GetIdByPhoneNumber(command.PhoneNumber);
+        FullName? userInfo = await GetUserInfoByRoleAndPhoneNumber(command.Role, command.PhoneNumber);
+        
+        Guid? userId = await _userQueryRepository.GetIdByPhoneNumberAsync(command.PhoneNumber);
         if (userId == null)
         {
             throw new Exception("User ID should not be null here.");
         }
-        var tokens = _authService.GenerateLoginTokens((Guid)userId, command.PhoneNumber, Guid.NewGuid(), command.Role);
-        _authService.SaveRefreshToken(tokens.RefreshToken);
+        var tokens = _authService.GenerateLoginTokens((Guid)userId, command.PhoneNumber, command.DeviceId, command.Role);
+        await _authService.SaveRefreshToken(tokens.RefreshToken);
         RefreshTokenDTO refreshTokenDTO = new RefreshTokenDTO
         {
             Id = tokens.RefreshToken.Id,
@@ -90,8 +82,19 @@ public class LoginHandler : IHandler<LoginCommand, Result<LoginResponseDTO>>
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO
         {
             Expires = tokens.AccessToken.Expires,
-            Token = tokens.RefreshToken.Token
+            Token = tokens.AccessToken.Token
         };
         return Result<LoginResponseDTO>.Success(new LoginResponseDTO(userInfo?.FirstName!, userInfo?.LastName!, accessTokenDTO, refreshTokenDTO));
+    }
+
+    private Task<FullName?> GetUserInfoByRoleAndPhoneNumber(Roles role, string phoneNumber)
+    {
+        return role switch
+        {
+            Roles.Patient => _patientQueryRepository.GetFirstAndLastNameByPhoneNumberAsync(phoneNumber),
+            Roles.Doctor => _doctorQueryRepository.GetFirstAndLastNameByPhoneNumberAsync(phoneNumber),
+            Roles.Secretary => _secretaryQueryRepository.GetFirstAndLastNameByPhoneNumberAsync(phoneNumber),
+            _ => throw new Exception("Role not supported."),
+        };
     }
 }

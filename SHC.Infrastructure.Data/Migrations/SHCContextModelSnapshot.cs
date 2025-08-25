@@ -22,6 +22,34 @@ namespace SHC.Infrastructure.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("SHC.Core.Domain.Admin.Admin", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Firstname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lastname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("DBAdmin");
+                });
+
             modelBuilder.Entity("SHC.Core.Domain.Doctor.Doctor", b =>
                 {
                     b.Property<Guid>("Id")
@@ -229,6 +257,34 @@ namespace SHC.Infrastructure.Data.Migrations
                     b.ToTable("DBPatient");
                 });
 
+            modelBuilder.Entity("SHC.Core.Domain.Secretary.Secretary", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Firstname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lastname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("DBSecretary");
+                });
+
             modelBuilder.Entity("SHC.Core.Domain.User.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -292,6 +348,15 @@ namespace SHC.Infrastructure.Data.Migrations
                     b.ToTable("DBRefreshToken");
                 });
 
+            modelBuilder.Entity("SHC.Core.Domain.Admin.Admin", b =>
+                {
+                    b.HasOne("SHC.Core.Domain.User.User", null)
+                        .WithOne()
+                        .HasForeignKey("SHC.Core.Domain.Admin.Admin", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SHC.Core.Domain.Doctor.Doctor", b =>
                 {
                     b.HasOne("SHC.Core.Domain.User.User", null)
@@ -351,6 +416,15 @@ namespace SHC.Infrastructure.Data.Migrations
                     b.HasOne("SHC.Core.Domain.User.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SHC.Core.Domain.Secretary.Secretary", b =>
+                {
+                    b.HasOne("SHC.Core.Domain.User.User", null)
+                        .WithOne()
+                        .HasForeignKey("SHC.Core.Domain.Secretary.Secretary", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

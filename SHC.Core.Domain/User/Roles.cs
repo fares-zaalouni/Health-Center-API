@@ -2,6 +2,8 @@
 
 public enum Roles
 {
+    Admin,
+    Secretary,
     Doctor,
     Patient,
 }

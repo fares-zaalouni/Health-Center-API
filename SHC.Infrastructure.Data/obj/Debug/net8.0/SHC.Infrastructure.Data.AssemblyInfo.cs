@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SHC.Infrastructure.Data")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cb0e7c767d46a93779e70289cebfb39dbc38e826")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5fdfc0d9f2bb4e2f57d619d78dc151f748921162")]
 [assembly: System.Reflection.AssemblyProductAttribute("SHC.Infrastructure.Data")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SHC.Infrastructure.Data")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

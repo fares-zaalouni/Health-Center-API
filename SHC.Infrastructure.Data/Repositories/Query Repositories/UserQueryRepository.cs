@@ -30,7 +30,7 @@ public class UserQueryRepository : IUserQueryRepository
         return _dbContext.DBUser.FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber);
     }
 
-    public Task<Guid?> GetIdByPhoneNumber(string phoneNumber)
+    public Task<Guid?> GetIdByPhoneNumberAsync(string phoneNumber)
     {
         return _dbContext.DBUser.Where(u => u.PhoneNumber.Equals(phoneNumber))
             .Select(u => (Guid?)u.Id)

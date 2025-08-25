@@ -169,3 +169,4 @@ C:\Users\fares\source\repos\SHC\SHC.Presentation\bin\Debug\net8.0\SHC.Infrastruc
 C:\Users\fares\source\repos\SHC\SHC.Presentation\bin\Debug\net8.0\SHC.Core.Projections.pdb
 C:\Users\fares\source\repos\SHC\SHC.Presentation\bin\Debug\net8.0\SHC.Infrastructure.Models.pdb
 C:\Users\fares\source\repos\SHC\SHC.Presentation\bin\Debug\net8.0\SHC.Infrastructure.Security.pdb
+C:\Users\fares\source\repos\SHC\SHC.Presentation\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

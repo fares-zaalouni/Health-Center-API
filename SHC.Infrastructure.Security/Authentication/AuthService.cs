@@ -37,7 +37,7 @@ public class AuthService : IAuthService
         await _unitOfWork.SaveAsync();
     }
 
-    // NEEDS TO ADD TAKING CARE OF REVOKED TOKENS
+    // NEEDS TO TAKE CARE OF REVOKED TOKENS
     public async Task<RefreshToken?> ValidateRefreshToken(string token, Guid userId, Guid deviceId)
     {
         RefreshToken? refreshToken = await _refreshTokenRepository.GetByTokenAndDeviceId(token, deviceId);
@@ -45,7 +45,7 @@ public class AuthService : IAuthService
             return null;
         if (refreshToken.Revoked.HasValue)
         {
-            // Log token reuse attempt }
+            // Log token reuse attempt 
             return null;
         }
         if (refreshToken.UserId != userId)

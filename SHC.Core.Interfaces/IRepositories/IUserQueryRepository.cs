@@ -17,7 +17,7 @@ public interface IUserQueryRepository
 
     Task<User?> GetByPhoneNumberAsync(string phoneNumber);
 
-    Task<Guid?> GetIdByPhoneNumber(string phoneNumber);
+    Task<Guid?> GetIdByPhoneNumberAsync(string phoneNumber);
 
     bool HasRoleByPhoneNumber(string phoneNumber, Roles role);
     public IQueryable<User> Query();
