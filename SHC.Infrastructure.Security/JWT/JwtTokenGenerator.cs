@@ -38,8 +38,8 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         return new Models.AccessToken
         {
             Token = new JwtSecurityTokenHandler().WriteToken(token),
-            Created = DateTime.UtcNow,
-            Expires = token.ValidTo
+            CreatedAt = DateTime.UtcNow,
+            ExpiresAt = token.ValidTo
         };
     }
 
@@ -52,8 +52,8 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         {
             Id = Guid.NewGuid(),
             Token = Convert.ToBase64String(randomNumber),
-            Created = DateTime.UtcNow,
-            Expires = DateTime.UtcNow.AddDays(_options.RefreshTokenExpirationDays),
+            CreatedAt = DateTime.UtcNow,
+            ExpiresAt = DateTime.UtcNow.AddDays(_options.RefreshTokenExpirationDays),
             Role = role,
             UserId = userId,
             DeviceId = deviceID

@@ -67,24 +67,23 @@ public class LoginHandler : IHandler<LoginCommand, Result<LoginResponseDTO>>
         FullName? userInfo = await GetUserInfoByRoleAndPhoneNumber(command.Role, command.PhoneNumber);
         
         Guid? userId = await _userQueryRepository.GetIdByPhoneNumberAsync(command.PhoneNumber);
-        if (userId == null)
+        if (userId == null || userInfo == null)
         {
-            throw new Exception("User ID should not be null here.");
+            throw new Exception("The user info should not be null here");
         }
         var tokens = _authService.GenerateLoginTokens((Guid)userId, command.PhoneNumber, command.DeviceId, command.Role);
         await _authService.SaveRefreshToken(tokens.RefreshToken);
         RefreshTokenDTO refreshTokenDTO = new RefreshTokenDTO
         {
-            Id = tokens.RefreshToken.Id,
-            Expires = tokens.RefreshToken.Expires,
+            ExpiresAt = tokens.RefreshToken.ExpiresAt,
             Token = tokens.RefreshToken.Token
         };
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO
         {
-            Expires = tokens.AccessToken.Expires,
+            ExpiresAt = tokens.AccessToken.ExpiresAt,
             Token = tokens.AccessToken.Token
         };
-        return Result<LoginResponseDTO>.Success(new LoginResponseDTO(userInfo?.FirstName!, userInfo?.LastName!, accessTokenDTO, refreshTokenDTO));
+        return Result<LoginResponseDTO>.Success(new LoginResponseDTO(userId.Value , userInfo?.FirstName!, userInfo?.LastName!, accessTokenDTO, refreshTokenDTO));
     }
 
     private Task<FullName?> GetUserInfoByRoleAndPhoneNumber(Roles role, string phoneNumber)

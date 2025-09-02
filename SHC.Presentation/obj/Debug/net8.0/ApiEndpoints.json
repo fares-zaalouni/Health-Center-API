@@ -67,5 +67,26 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SHC.Presentation.Controllers.PatientController",
+    "Method": "TestUser",
+    "RelativePath": "api/Patient/test-user/{phone}/{role}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "phone",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "role",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

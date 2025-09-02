@@ -24,13 +24,12 @@ public class RenewTokensHandler : IHandler<RenewTokensCommand, Result<RenewToken
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO
         {
             Token = tokens.AccessToken.Token,
-            Expires = tokens.AccessToken.Expires
+            ExpiresAt = tokens.AccessToken.ExpiresAt
         };
         RefreshTokenDTO refreshTokenDTO = new RefreshTokenDTO
         {
-            Id = tokens.RefreshToken.Id,
             Token = tokens.RefreshToken.Token,
-            Expires = tokens.RefreshToken.Expires
+            ExpiresAt = tokens.RefreshToken.ExpiresAt
         };
         var response = new RenewTokensResponseDTO
         {

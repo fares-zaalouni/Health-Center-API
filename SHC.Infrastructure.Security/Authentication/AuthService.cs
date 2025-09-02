@@ -41,9 +41,9 @@ public class AuthService : IAuthService
     public async Task<RefreshToken?> ValidateRefreshToken(string token, Guid userId, Guid deviceId)
     {
         RefreshToken? refreshToken = await _refreshTokenRepository.GetByTokenAndDeviceId(token, deviceId);
-        if (refreshToken == null || refreshToken.Expires < DateTime.UtcNow)
+        if (refreshToken == null || refreshToken.ExpiresAt < DateTime.UtcNow)
             return null;
-        if (refreshToken.Revoked.HasValue)
+        if (refreshToken.RevokedAt.HasValue)
         {
             // Log token reuse attempt 
             return null;
@@ -62,7 +62,7 @@ public class AuthService : IAuthService
         if (token == null)
             throw new Exception("Token not found");
 
-        token.Revoked = DateTime.UtcNow;
+        token.RevokedAt = DateTime.UtcNow;
         token.ReplacedByToken = replacedByToken;
         await _unitOfWork.SaveAsync();
     }
