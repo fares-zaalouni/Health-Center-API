@@ -1,20 +1,35 @@
-# Stage 1: Build
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /app
 
-# Copy csproj and restore
-COPY *.sln .
-COPY SHC.Presentation/*.csproj ./SHC.Presentation/
+WORKDIR /src
+
+# Copy the solution file first
+COPY SHC.sln ./
+
+# Copy all project folders
+COPY SHC.Presentation/ SHC.Presentation/
+COPY SHC.Core.Domain/ SHC.Core.Domain/
+COPY SHC.Core.Services/ SHC.Core.Services/
+COPY SHC.Application/ SHC.Application/
+COPY SHC.Infrastructure.Data/ SHC.Infrastructure.Data/
+COPY SHC.Core.Interfaces/ SHC.Core.Interfaces/
+COPY SHC.Infrastructure.Security/ SHC.Infrastructure.Security/
+COPY SHC.Core.Projections/ SHC.Core.Projections/
+COPY SHC.Infrastructure.Models/ SHC.Infrastructure.Models/
+
+# Restore dependencies
 RUN dotnet restore
 
-# Copy everything else and build
+# Copy everything else (if any)
 COPY . .
-WORKDIR /app/SHC.Presentation
-RUN dotnet publish -c Release -o out
 
-# Stage 2: Runtime
+# Build the solution
+RUN dotnet build -c Release -o /app/build
+
+# Publish
+RUN dotnet publish SHC.Presentation/SHC.Presentation.csproj -c Release -o /app/publish
+
+# Runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
-COPY --from=build /app/SHC.Presentation/out ./
-EXPOSE 5000
+COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "SHC.Presentation.dll"]
